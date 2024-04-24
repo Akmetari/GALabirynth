@@ -16,16 +16,16 @@ class Labirynth(object):
 
         self.matrix= []
 
-        for i in range(x): #creating def empty matrix
+        for i in range(x): #creating empty matrix
             row=[]
             for j in range(y):
                 row.append(EMPTY)
             self.matrix.append(row)
 
 
-    def fillLabirynth(self,walls):  # wals in form of tuples representing boxes of labirynth
+    def fillLabirynth(self,walls):  # wals in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
-            self.matrix[w[0]][w[1]]=WALL #fills matrix with wall symbol where assigned by walls list
+            self.matrix[w[0]][w[1]]=WALL #fills matrix with wall symbol where assigned by walls
 
     def passes(self, path):
         passes=True;
