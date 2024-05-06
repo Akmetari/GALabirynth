@@ -20,48 +20,41 @@ class Individual(object):
 
                 match direction: #checking if there is no wall in next step
                     case l.RIGHT:
-                       if (self.path[lastStep[0]+1][lastStep[1]] == l.WALL) or (not self.path[lastStep[0]+1][lastStep[1]] ==l.EMPTY): #prawo
+                       if (self.labirynth.matrix[lastStep[0]+1][lastStep[1]] == l.WALL) or (not self.labirynth.matrix[lastStep[0]+1][lastStep[1]] ==l.EMPTY): #prawo
                            directionsChecked[0]=1
                            nextWall=True
                        else:
                            nextWall=False
+                           self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.RIGHT
+                           lastStep = (lastStep[0] + 1, lastStep[1])
                     case l.UP:
-                        if (self.path[lastStep[0]][lastStep[1]+1] == l.WALL) or (not self.path[lastStep[0]+1][lastStep[1]] ==l.EMPTY) : #góra
+                        if (self.labirynth.matrix[lastStep[0]][lastStep[1]+1] == l.WALL) or (not self.labirynth.matrix[lastStep[0]+1][lastStep[1]] ==l.EMPTY) : #góra
                             directionsChecked[1] = 2
                             nextWall = True
                         else:
                             nextWall = False
+                            self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.UP
+                            lastStep = (lastStep[0], lastStep[1] + 1)
                     case l.LEFT:
-                        if (self.path[lastStep[0] -1][lastStep[1]] == l.WALL) or (not self.path[lastStep[0]+1][lastStep[1]] ==l.EMPTY) :#lewo
+                        if (self.labirynth.matrix[lastStep[0] -1][lastStep[1]] == l.WALL) or (not self.labirynth.matrix[lastStep[0]+1][lastStep[1]] ==l.EMPTY) :#lewo
                             directionsChecked[2] = 3
                             nextWall = True
                         else:
                             nextWall = False
+                            self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.LEFT
+                            lastStep = (lastStep[0] - 1, lastStep[1])
                     case l.DOWN:
-                        if (self.path[lastStep[0]][lastStep[1]-1] == l.WALL) or (not self.path[lastStep[0]+1][lastStep[1]] ==l.EMPTY): #dół
+                        if (self.labirynth.matrix[lastStep[0]][lastStep[1]-1] == l.WALL) or (not self.labirynth.matrix[lastStep[0]+1][lastStep[1]] ==l.EMPTY): #dół
                             directionsChecked[3] = 4
                             nextWall = True
                         else:
                             nextWall = False
+                            self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.DOWN
+                            lastStep = (lastStep[0], lastStep[1] - 1)
 
                 if not (0 in directionsChecked):
                     possibleMove=False
-
-            if possibleMove:
-                match direction:
-                    case l.RIGHT:
-                        self.path[lastStep[0]][lastStep[1]] = l.RIGHT
-                        lastStep=(lastStep[0]+1,lastStep[1])
-                    case l.UP:
-                        self.path[lastStep[0]][lastStep[1]] = l.UP
-                        lastStep = (lastStep[0], lastStep[1]+1)
-                    case l.LEFT:
-                        self.path[lastStep[0]][lastStep[1]] = l.LEFT
-                        lastStep = (lastStep[0] - 1, lastStep[1])
-                    case l.DOWN:
-                        self.path[lastStep[0]][lastStep[1]] = l.DOWN
-                        lastStep = (lastStep[0] , lastStep[1]-1)
-            else:
+            if not possibleMove:
                 break
 
 
@@ -70,24 +63,16 @@ class Individual(object):
             fitness=self.evaluator.evaluate(self)
         return self.fitness
     def __init__(self, rows, columns, evaluator):
-        self.path=[]
+        self.labirynth=evaluator.labirynth
         self.fitness=0
         self.wasChanged=False
         self.evaluator=evaluator
 
-        for i in range(rows):
-            row=[]
-            for j in range(columns):
-                row.append(0)
-            self.path.append(row)
-        self.generateRandomPath(self, random.randint(len(self.path) - 1))
+        self.generateRandomPath(self, random.randint(len(self.labirynth.xSize)/2))
 
 
     def __str__(self):
-
-
-
-        return
+        return ("Fitness: "+self.fitness +"\n"+ self.labirynth.__str__())
 
 
 

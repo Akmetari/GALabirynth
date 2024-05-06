@@ -27,6 +27,17 @@ class Labirynth(object):
             self.matrix.append(row)
 
 
+    def __str__(self):
+        str=""
+
+        for x in self.matrix:
+            for y in self.matrix[x]:
+                str=str+ self.matrix[x][y]+"  "
+            str+="\n"
+
+        return str
+
+
     def fillLabirynth(self,walls):  # wals in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
             self.matrix[w[0]][w[1]]=WALL #fills matrix with wall symbol where assigned by walls
