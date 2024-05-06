@@ -1,6 +1,10 @@
 
-WALL=1
+WALL=9
 EMPTY=0
+RIGHT=1
+LEFT=3
+UP=2
+DOWN=4
 DEF_X_SIZE=20
 DEF_Y_SIZE=20
 DEF_START=(0,1)
@@ -29,12 +33,6 @@ class Labirynth(object):
 
     def passes(self, path):
         passes=True;
-        if path[0]==self.startPoint & path[-1]==self.endPoint:
-            lastStep=self.startPoint
-            for step in path:
-                passes&=(abs(step[0]-lastStep[0])==1 ^ abs(step[1]-lastStep[1])==1) #checks if next step goes by 1 box exacly in one of two axes
-                if not passes:
-                    break
 
         return passes
 
