@@ -1,9 +1,10 @@
 import Individual
+from Labirynth import *
 class GA(object):
 
-    def __init__(self, labirynth, popSize ):
+    def __init__(self, labirynth:Labirynth, popSize=10 ):
         self.labirynth=labirynth
-        self.population= self.generatePopulation(popSize,len(labirynth), len(labirynth[0]))
+        self.population= self.generatePopulation(popSize,labirynth.xSize, labirynth.ySize)
         
 
 

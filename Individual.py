@@ -62,7 +62,7 @@ class Individual(object):
         if self.wasChanged:
             fitness=self.evaluator.evaluate(self)
         return self.fitness
-    def __init__(self, rows, columns, evaluator):
+    def __init__(self, evaluator):
         self.labirynth=evaluator.labirynth
         self.fitness=0
         self.wasChanged=False
