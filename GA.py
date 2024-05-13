@@ -1,16 +1,14 @@
-import Individual
-from Labirynth import *
+from Individual import Individual
 class GA(object):
 
-    def __init__(self, labirynth:Labirynth, popSize=10 ):
+    def __init__(self, labirynth, popSize=10 ):
         self.labirynth=labirynth
-        self.population= self.generatePopulation(popSize,labirynth.xSize, labirynth.ySize)
+        self.population= self.generatePopulation(popSize)
         
 
 
-
-    def generatePopulation(self, size, labRows, labCol):
+    def generatePopulation(self, size):
         pop = []
         for i in range(size):
-            pop.append(Individual(labRows, labCol, self))
+            pop.append(Individual(self))
         return pop

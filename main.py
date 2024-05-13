@@ -1,19 +1,23 @@
-import Labirynth as l
+from Labirynth import Labirynth
 import Individual as ind
-import GA as ga
+from GA import GA
 
 def testLabirynth():
-    lab=l.Labirynth()
-    print(lab.__str__()+"\n")  # Press Ctrl+F8 to toggle the breakpoint.
+    lab=Labirynth()
+    print(str(lab)+"\n")  # Press Ctrl+F8 to toggle the breakpoint.
     return lab
 
-def testIndividual(lab: l.Labirynth):
-    eval=ga.GA(lab)
+def testIndividual(labirynth):
+    eval=GA(labirynth)
     i=ind.Individual(eval)
-    print(i.__str__()+"\n")
+    print(str(i)+"\n")
+
+def testPopulation(ga):
+    for ind in ga.population:
+        print(str(ind))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testIndividual(testLabirynth())
+    testPopulation(GA(testLabirynth(),10))
 
