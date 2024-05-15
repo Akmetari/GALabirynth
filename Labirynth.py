@@ -45,10 +45,23 @@ class Labirynth(object):
         s=""
 
         for row in self.matrix:
-            s+=str(row)+"\n"
-
+            r=""
+            for a in row:
+                r=r+str(a)+" "
+            s+=r+"\n"
         return s
-        #return str(self.matrix)
+
+
+    def printLab(self):
+        for row in self.matrix:
+            for a in row:
+                if a>0 and a<5:
+                    print("\033[34m"+str(a)+" ", end="")
+                elif a==9:
+                    print("\033[31m" + str(a) + " ", end="")
+                else:
+                    print("\033[37m"+str(a) + " ", end="")
+            print("")
 
     def fillLabirynth(self,walls):  # wals in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
@@ -56,11 +69,17 @@ class Labirynth(object):
 
 
     def passes(self, individual):
-        passes=True;
+        position=self.startPoint
 
+        for i in range(individual.pathLen):
+            next=self.makeStep(position)
+            if self.matrix[next[1]][next[0]] ==EMPTY: # if there is empty tile in path it means it isnt continuous
+                return False
 
-
-        return passes
+        if position==self.endPoint: # if after whole pass position is exit of labirynth, it has been passed
+            return True
+        else:
+            return False
 
     def makeStep(self, position:()): #returns position after step coded on given labirynth crate
         direction=self.matrix[position[1]][position[0]]

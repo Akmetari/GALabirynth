@@ -42,6 +42,12 @@ class Individual(object):
     def __str__(self):
         return ("Fitness: "+ str(self.fitness) +"\n"+ str(self.labirynth))
 
+    def printInd(self):
+        print("Path len= " +str(self.pathLen))
+        print("Fitmess= "+ str(self.fitness))
+        self.labirynth.printLab()
+        print("")
+
 
 
 

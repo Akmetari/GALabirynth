@@ -6,17 +6,17 @@ from GA import GA
 
 def testLabirynth():
     lab=Labirynth()
-    print(str(lab)+"\n")  # Press Ctrl+F8 to toggle the breakpoint.
+    lab.printLab() # Press Ctrl+F8 to toggle the breakpoint.
     return lab
 
 def testIndividual(labirynth):
     eval=GA(labirynth)
     i=ind.Individual(eval)
-    print(str(i)+"\n")
+    i.printInd()
 
 def testPopulation(ga):
     for ind in ga.population:
-        print(str(ind))
+        ind.printInd()
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
