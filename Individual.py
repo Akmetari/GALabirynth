@@ -1,69 +1,42 @@
 import random
 import Labirynth as l
+import copy
 
 class Individual(object):  
 
-    def generateRandomPath(self, pathLen):
+    def generateRandomPath(self):
 
+        tmp=0
         lastStep=self.evaluator.labirynth.startPoint
-       # self.labirynth.matrix[lastStep[1]][lastStep[0] ]=5
-
-        for i in range(pathLen):
+        for i in range(self.pathLen):
             directionsToCheck=[1,2,3,4]
 
             while not (directionsToCheck==[]): #picking direction of next step untill it doesn't hit a wall or wont mean going back
                 direction=random.choice(directionsToCheck)
 
-                match direction: #checking if there is no wall in next step
-                    case l.RIGHT:
-                       if (lastStep[0]+1>=self.labirynth.xSize) or (self.labirynth.matrix[lastStep[1]][lastStep[0]+1] !=l.EMPTY): #prawo
-                           directionsToCheck.remove(1)
+                self.labirynth.matrix[lastStep[1]][lastStep[0]] = direction
+                tmpStep=self.labirynth.makeStep(lastStep)
+                if(tmpStep[0]>0 and tmpStep[0]<self.labirynth.ySize and tmpStep[1]>0 and tmpStep[1]<self.labirynth.xSize and self.labirynth.matrix[tmpStep[1]][tmpStep[0]] ==l.EMPTY):
+                    lastStep = tmpStep
+                    break
+                else:
+                    directionsToCheck.remove(direction) # delete thid direction from possible not to check them multiple times
+                    self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.EMPTY
 
-                       else:
-                           self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.RIGHT
-                           lastStep = (lastStep[0] + 1,lastStep[1])
-                           break
-                    case l.UP:
-                        if ((lastStep[1]-1<0) or
-                                ( self.labirynth.matrix[lastStep[1]-1][lastStep[0]] !=l.EMPTY)) : #góra
-                            directionsToCheck.remove(2)
-
-                        else:
-                            self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.UP
-                            lastStep = ( lastStep[0],lastStep[1]-1)
-                            break
-                    case l.LEFT:
-                        if (lastStep[0]-1<0) or (self.labirynth.matrix[lastStep[1]][lastStep[0]-1] !=l.EMPTY) :#lewo
-                            directionsToCheck.remove(3)
-
-                        else:
-                            self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.LEFT
-                            lastStep = ( lastStep[0]- 1,lastStep[1])
-                            break
-                    case l.DOWN:
-                        if ((lastStep[1]+1>self.labirynth.ySize) or
-                                (self.labirynth.matrix[lastStep[1]+1][lastStep[0]] !=l.EMPTY)): #dół
-                            directionsToCheck.remove(4)
-
-                        else:
-                            self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.DOWN
-                            lastStep = ( lastStep[0],lastStep[1]+ 1 )
-                            break
-            if (directionsToCheck==[]):
+            if (directionsToCheck==[]): # if there are no more moves to try its dead end so we stop path generation
                 break
-
-
     def getFitness(self):
         if self.wasChanged:
             fitness=self.evaluator.evaluate(self)
         return self.fitness
     def __init__(self, evaluator):
-        self.labirynth=evaluator.labirynth
+        self.labirynth=copy.deepcopy(evaluator.labirynth)
         self.fitness=0
         self.wasChanged=False
         self.evaluator=evaluator
 
-        self.generateRandomPath(random.randint(1, round(self.labirynth.xSize/2)))
+        self.pathLen=random.randint(4, self.labirynth.xSize)
+        self.generateRandomPath()
 
 
     def __str__(self):

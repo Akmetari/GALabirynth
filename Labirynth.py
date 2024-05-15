@@ -55,9 +55,23 @@ class Labirynth(object):
             self.matrix[w[1]][w[0]]=WALL #fills matrix with wall symbol where assigned by walls
 
 
-    def passes(self, path):
+    def passes(self, individual):
         passes=True;
+
+
 
         return passes
 
+    def makeStep(self, position:()): #returns position after step coded on given labirynth crate
+        direction=self.matrix[position[1]][position[0]]
 
+        if direction == RIGHT:
+            return (position[0]+1,position[1])
+        elif direction == UP:
+            return (position[0], position[1]-1)
+        elif direction == LEFT:
+            return (position[0]-1,position[1])
+        elif direction == DOWN:
+            return (position[0], position[1]+1)
+        else:
+            return position

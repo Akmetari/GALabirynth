@@ -1,5 +1,7 @@
 from Labirynth import Labirynth
 import Individual as ind
+import random
+from datetime import datetime
 from GA import GA
 
 def testLabirynth():
@@ -19,5 +21,6 @@ def testPopulation(ga):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testPopulation(GA(testLabirynth(),10))
+    random.seed(datetime.now().timestamp())
+    testPopulation(GA(testLabirynth(),popSize=5))
 
