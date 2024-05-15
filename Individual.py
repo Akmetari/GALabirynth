@@ -2,6 +2,9 @@ import random
 import Labirynth as l
 import copy
 
+MUTATION_SIZE=1
+
+
 class Individual(object):  
 
     def generateRandomPath(self):
@@ -37,6 +40,17 @@ class Individual(object):
 
         self.pathLen=random.randint(4, self.labirynth.xSize)
         self.generateRandomPath()
+
+
+    def mutate(self):
+        i=0
+
+        while i<MUTATION_SIZE:
+           x=random.randint(0,self.labirynth.xSize)
+           y=random.randint(0,self.labirynth.ySize)
+
+           if self.labirynth.matrix[x][y]!=9:
+                self.labirynth.matrix[x][y]=random.randint(0,4)
 
 
     def __str__(self):
