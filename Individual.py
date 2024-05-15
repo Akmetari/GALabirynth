@@ -9,46 +9,45 @@ class Individual(object):  #brak ograniczen generowania kroków Eby poza mape ni
         self.labirynth.matrix[lastStep[1]][lastStep[0] ]=5
 
         for i in range(pathLen):
-            directionsChecked=[0,0,0,0]
-            possibleMove=True
+            directionsToCheck=[1,2,3,4]
 
-            while 0 in directionsChecked: #picking direction of next step untill it doesn't hit a wall or wont mean going back
-                direction=random.randint(0,4)
+            while not (directionsToCheck==[]): #picking direction of next step untill it doesn't hit a wall or wont mean going back
+                direction=random.choice(directionsToCheck)
 
                 match direction: #checking if there is no wall in next step
                     case l.RIGHT:
-                       if (self.labirynth.matrix[lastStep[1]][lastStep[0]+1] == l.WALL) or (not self.labirynth.matrix[lastStep[1]][lastStep[0]+1] ==l.EMPTY): #prawo
-                           directionsChecked[0]=1
+                       if (lastStep[0]+1>=self.labirynth.xSize) or (self.labirynth.matrix[lastStep[1]][lastStep[0]+1] == l.WALL) or (not self.labirynth.matrix[lastStep[1]][lastStep[0]+1] ==l.EMPTY): #prawo
+                           directionsToCheck.remove(1)
 
                        else:
                            self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.RIGHT
                            lastStep = (lastStep[1], lastStep[0] + 1)
+                           break
                     case l.UP:
-                        if (self.labirynth.matrix[lastStep[1]-1][lastStep[0]] == l.WALL) or (not self.labirynth.matrix[lastStep[1]-1][lastStep[0]] ==l.EMPTY) : #góra
-                            directionsChecked[1] = 2
+                        if (lastStep[1]-1<0) or (self.labirynth.matrix[lastStep[1]-1][lastStep[0]] == l.WALL) or (not self.labirynth.matrix[lastStep[1]-1][lastStep[0]] ==l.EMPTY) : #góra
+                            directionsToCheck.remove(2)
 
                         else:
-
                             self.labirynth.matrix[lastStep[0]][lastStep[1]] = l.UP
                             lastStep = (lastStep[1]-1, lastStep[0])
+                            break
                     case l.LEFT:
-                        if (self.labirynth.matrix[lastStep[1] ][lastStep[0]-1] == l.WALL) or (not self.labirynth.matrix[lastStep[1]][lastStep[0]-1] ==l.EMPTY) :#lewo
-                            directionsChecked[2] = 3
+                        if (lastStep[0]-1<0) or (self.labirynth.matrix[lastStep[1] ][lastStep[0]-1] == l.WALL) or (not self.labirynth.matrix[lastStep[1]][lastStep[0]-1] ==l.EMPTY) :#lewo
+                            directionsToCheck.remove(3)
 
                         else:
-
                             self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.LEFT
                             lastStep = (lastStep[1] , lastStep[0]- 1)
+                            break
                     case l.DOWN:
-                        if (self.labirynth.matrix[lastStep[1]+1][lastStep[0]] == l.WALL) or (not self.labirynth.matrix[lastStep[1]+1][lastStep[0]] ==l.EMPTY): #dół
-                            directionsChecked[3] = 4
+                        if (lastStep[1]+1>self.labirynth.ySize) or (self.labirynth.matrix[lastStep[1]+1][lastStep[0]] == l.WALL) or (not self.labirynth.matrix[lastStep[1]+1][lastStep[0]] ==l.EMPTY): #dół
+                            directionsToCheck.remove(4)
 
                         else:
-
                             self.labirynth.matrix[lastStep[1]][lastStep[0]] = l.DOWN
                             lastStep = (lastStep[1]+ 1, lastStep[0] )
-
-            if not possibleMove:
+                            break
+            if (directionsToCheck==[]):
                 break
 
 

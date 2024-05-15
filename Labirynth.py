@@ -45,11 +45,10 @@ class Labirynth(object):
         s=""
 
         for row in self.matrix:
-            for y in row:
-                s+= str(row[y])+"  "
-            s+="\n"
+            s+=str(row)+"\n"
 
         return s
+        #return str(self.matrix)
 
     def fillLabirynth(self,walls):  # wals in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
