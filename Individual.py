@@ -9,7 +9,6 @@ class Individual(object):
 
     def generateRandomPath(self):
 
-        tmp=0
         lastStep=self.evaluator.labirynth.startPoint
         for i in range(self.pathLen):
             directionsToCheck=[1,2,3,4]
@@ -28,14 +27,14 @@ class Individual(object):
 
             if (directionsToCheck==[]): # if there are no more moves to try its dead end so we stop path generation
                 break
-    def getFitness(self):
+    def getFitness(self)->float:
         if self.wasChanged:
-            fitness=self.evaluator.evaluate(self)
+            self.fitness=self.evaluator.evaluate(self)
         return self.fitness
     def __init__(self, evaluator):
         self.labirynth=copy.deepcopy(evaluator.labirynth)
         self.fitness=0
-        self.wasChanged=False
+        self.wasChanged=True
         self.evaluator=evaluator
 
         self.pathLen=random.randint(4, self.labirynth.xSize)
@@ -44,26 +43,24 @@ class Individual(object):
 
     def mutate(self):
         i=0
-        print("mutate")
-        self.printInd()
         while i<MUTATION_SIZE:
             i+=1
             x=random.randint(0,self.labirynth.xSize-1)
             y=random.randint(0,self.labirynth.ySize-1)
 
             if self.labirynth.matrix[x][y]!=9:
+                if self.labirynth.matrix[x][y]==l.EMPTY:
+                    self.pathLen+=1
                 self.labirynth.matrix[x][y]=random.randint(0,4)
 
-        print("mutated")
-        self.printInd()
 
 
     def __str__(self):
-        return ("Fitness: "+ str(self.fitness) +"\n"+ str(self.labirynth))
+        return ("Fitness: "+ str(self.getFitness()) +"\n"+ str(self.labirynth))
 
     def printInd(self):
         print("Path len= " +str(self.pathLen))
-        print("Fitmess= "+ str(self.fitness))
+        print("Fitness= "+ str(self.getFitness()))
         self.labirynth.printLab()
         print("")
 

@@ -24,5 +24,5 @@ def testMutation(ga):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testMutation(GA(Labirynth(),popSize=200))
+    testPopulation(GA(Labirynth(),popSize=50))
 

@@ -29,6 +29,16 @@ class GA(object):
                 ind.mutate()
 
 
+    def evaluate(self,ind : Individual)->float: # calculates fitness of individual, we will minimize the function
+        pathCheck= ind.labirynth.pathCheck(ind)
+        pathWalked= pathCheck[1] if pathCheck[1]>0 else 1
+        continous= 0.4 if pathCheck[0] else 2
+        solution= 0.2 if ind.labirynth.isSolution(ind) else 1
+        startEnd= 0.5 if ind.labirynth.isStartAndEnd(ind) else 1
+
+        fitness= (1/pathWalked) *continous*solution*startEnd *(1/ind.pathLen)
+
+        return fitness
     def setLogDest(self,dest):
         self.logDest=dest
     def log(self, fileName=""):
@@ -40,7 +50,7 @@ class GA(object):
         with open(self.logDest+fileName,"w") as file:
             file.write(self.generateLog())
 
-    def generateLog(self):
+    def generateLog(self)->str:
         return "Log"
 
     def run(self, stopPred):

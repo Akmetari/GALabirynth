@@ -63,25 +63,29 @@ class Labirynth(object):
                     print("\033[37m"+str(a) + " ", end="")
             print("")
 
-    def fillLabirynth(self,walls):  # wals in form of tuples representing squares of labirynth eg. (1,3)
+    def fillLabirynth(self,walls):  # walls in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
             self.matrix[w[1]][w[0]]=WALL #fills matrix with wall symbol where assigned by walls
 
 
-    def passes(self, individual):
+    def pathCheck(self, individual)-> (bool,int): #checks if path is continuous and doesn't hit any wall, returns info if bad step and length of path walked before it
         position=self.startPoint
-
+        steps=0
         for i in range(individual.pathLen):
             next=self.makeStep(position)
-            if self.matrix[next[1]][next[0]] ==EMPTY: # if there is empty tile in path it means it isnt continuous
-                return False
+            steps+=1
+            if self.matrix[next[1]][next[0]] ==EMPTY or self.matrix[next[1]][next[0]] ==WALL : # if there is empty tile/ wall in path it means it isnt continuous/ wont get us anywhere
+                return (False,steps)
 
-        if position==self.endPoint: # if after whole pass position is exit of labirynth, it has been passed
-            return True
-        else:
-            return False
+        return (True,steps)
 
-    def makeStep(self, position:()): #returns position after step coded on given labirynth crate
+    def isSolution(self, individual)->bool:
+        return self.pathCheck(individual)[0] and self.isStartAndEnd(individual)
+
+    def isStartAndEnd(self,individual)->bool:
+        return individual.labirynth.matrix[self.startPoint[1]][self.startPoint[0]] != EMPTY and individual.labirynth.matrix[self.endPoint[1]][self.endPoint[0]] != EMPTY
+
+    def makeStep(self, position:())->(int,int): #returns position after step coded on given labirynth crate
         direction=self.matrix[position[1]][position[0]]
 
         if direction == RIGHT:
