@@ -44,13 +44,18 @@ class Individual(object):
 
     def mutate(self):
         i=0
-
+        print("mutate")
+        self.printInd()
         while i<MUTATION_SIZE:
-           x=random.randint(0,self.labirynth.xSize)
-           y=random.randint(0,self.labirynth.ySize)
+            i+=1
+            x=random.randint(0,self.labirynth.xSize-1)
+            y=random.randint(0,self.labirynth.ySize-1)
 
-           if self.labirynth.matrix[x][y]!=9:
+            if self.labirynth.matrix[x][y]!=9:
                 self.labirynth.matrix[x][y]=random.randint(0,4)
+
+        print("mutated")
+        self.printInd()
 
 
     def __str__(self):

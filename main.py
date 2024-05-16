@@ -18,9 +18,11 @@ def testPopulation(ga):
     for ind in ga.population:
         ind.printInd()
 
+def testMutation(ga):
+    ga.mutate()
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    random.seed(datetime.now().timestamp())
-    testPopulation(GA(testLabirynth(),popSize=5))
+    testMutation(GA(Labirynth(),popSize=200))
 
