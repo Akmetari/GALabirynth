@@ -1,4 +1,5 @@
-import time
+from datetime import datetime
+from datetime import timedelta
 
 from Individual import Individual
 import random
@@ -8,13 +9,16 @@ CROSS_CHANCE=50
 
 class GA(object):
 
-    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth" ):
+    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth", runTime=timedelta(hours=1)  ):
         self.labirynth=labirynth
         self.population= self.generatePopulation(popSize)
         self.logDest=logDest
         self.fileName="log.txt"
         self.bestInd=None
         self.bestFit=100
+
+        self.startTime=datetime.now()
+        self.timeForRun=runTime
 
 
     def generatePopulation(self, size):
@@ -56,7 +60,7 @@ class GA(object):
         return "Log"
 
     def run(self, stopPred):
-        self.fileName="labirynthGenAlg"+ str(time.time())+".txt"
+        self.fileName="labirynthGenAlg"+ str(datetime.now().timestamp())+".txt"
 
         while not stopPred():
             self.cross()
@@ -84,3 +88,6 @@ class GA(object):
         print("\n Population:")
         for i in self.population:
             i.printInd()
+
+    def stopAfterTime(self):
+        return (self.startTime-datetime.now() >=self.timeForRun)
