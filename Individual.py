@@ -33,7 +33,7 @@ class Individual(object):
         return self.fitness
     def __init__(self, evaluator):
         self.labirynth=copy.deepcopy(evaluator.labirynth)
-        self.fitness=0
+        self.fitness=100
         self.wasChanged=True
         self.evaluator=evaluator
 

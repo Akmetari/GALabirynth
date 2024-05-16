@@ -13,6 +13,8 @@ class GA(object):
         self.population= self.generatePopulation(popSize)
         self.logDest=logDest
         self.fileName="log.txt"
+        self.bestInd=None
+        self.bestFit=100
 
 
     def generatePopulation(self, size):
@@ -59,8 +61,22 @@ class GA(object):
         while not stopPred():
             self.cross()
             self.mutate()
+            self.findBest()
             self.log(fileName=self.fileName)
 
+
+    def findBest(self):
+        bestFit=self.population[0].getFitness()
+        bestInd=self.population[0]
+
+        for ind in self.population:
+            newFit=ind.getFitness()
+            if newFit<bestFit:
+                bestFit= newFit
+                bestInd=ind
+
+        self.bestInd=bestInd
+        self.bestFit=bestFit
 
     def printGA(self):
         print("Labirynth: ")
