@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from Individual import Individual
 import random
-MUT_CHANCE=100
+MUT_CHANCE=1
 CROSS_CHANCE=50
 
 
@@ -16,6 +16,7 @@ class GA(object):
         self.fileName="log.txt"
         self.bestInd=None
         self.bestFit=100
+        self.diversityLevel=0
 
         self.startTime=datetime.now()
         self.timeForRun=runTime
@@ -45,6 +46,10 @@ class GA(object):
         fitness= (1/pathWalked) *continous*solution*startEnd *(1/ind.pathLen)
 
         return fitness
+
+    def countDiversity(self)->float:
+        #porównanie fitness, wybranie losowych punktów i sprawdzenie, w ilu miejscach sie różnią?
+        return 0
     def setLogDest(self,dest):
         self.logDest=dest
     def log(self, fileName=""):
