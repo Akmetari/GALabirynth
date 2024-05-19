@@ -81,7 +81,7 @@ class Labirynth(object):
 
         return goodSigns
 
-    def saveNewMatrix(self,filePath,string):
+    def saveNewMatrix(self,filePath,string): #file path should be generated based on user preference or in designed location
         newMatrix= self.stringToMatrix(string)
         if self.checkMatrix(newMatrix):
             with open(filePath, "w") as file:
@@ -105,6 +105,15 @@ class Labirynth(object):
     def fillLabirynth(self,walls):  # walls in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:
             self.matrix[w[1]][w[0]]=WALL #fills matrix with wall symbol where assigned by walls
+
+    def loadMatrixFromFile(self,filePath):
+        with open(filePath, "r") as file:
+            self.matrix=json.load(file)
+
+        self.xSize=len(self.matrix[0])
+        self.ySize=len(self.matrix)
+
+
 
 
     def pathCheck(self, individual)-> (bool,int): #checks if path is continuous and doesn't hit any wall, returns info if bad step and length of path walked before it

@@ -35,7 +35,14 @@ def testMatrixSave():
     strMatrix= "99500900000\n00999990990\n90900890009"
     lab.saveNewMatrix("D:\code\labirynthGA\GALabirynth\matrix.txt",strMatrix)
 
+def testMatrixLoad():
+    lab=Labirynth()
+    lab.loadMatrixFromFile("D:\code\labirynthGA\GALabirynth\matrix.txt")
+    lab.printLab()
+    print("x: "+str(lab.xSize))
+    print("y: "+str(lab.ySize))
+
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testMatrixSave()
+    testMatrixLoad()
 
