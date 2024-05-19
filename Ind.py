@@ -31,14 +31,16 @@ class Individual(object):
         if self.wasChanged:
             self.fitness=self.evaluator.evaluate(self)
         return self.fitness
-    def __init__(self, evaluator):
+    def __init__(self, evaluator, generate=True):
         self.labirynth=copy.deepcopy(evaluator.labirynth)
         self.fitness=100
         self.wasChanged=True
         self.evaluator=evaluator
 
         self.pathLen=random.randint(4, self.labirynth.xSize)
-        self.generateRandomPath()
+
+        if generate:
+            self.generateRandomPath()
 
 
     def mutate(self):
@@ -53,7 +55,29 @@ class Individual(object):
                     self.pathLen+=1
                 self.labirynth.matrix[x][y]=random.randint(0,4)
 
+    def cross(self,partner):
+        xStart=random.randint(0,self.labirynth.xSize-1)
+        xEnd=random.randint(xStart,self.labirynth.xSize-1)
+        yStart=random.randint(0,self.labirynth.ySize-1)
+        yEnd=random.randint(yStart,self.labirynth.ySize-1)
 
+        child1=Individual(self.evaluator,generate=False)
+        child2=Individual(self.evaluator, generate=False)
+
+        for i in range(0,self.labirynth.ySize):
+            for j in range (0, self.labirynth.xSize):
+                if i in range(yStart,yEnd) and j in range(xStart, xEnd):
+                    child1.labirynth.matrix[i][j]=self.labirynth.matrix[i][j]
+                    child2.labirynth.matrix[i][j]=partner.labirynth.matrix[i][j]
+                else:
+                    child2.labirynth.matrix[i][j] = self.labirynth.matrix[i][j]
+                    child1.labirynth.matrix[i][j] = partner.labirynth.matrix[i][j]
+
+        self.evaluator.removeFromPop(partner)
+        self.evaluator.removeFromPop(self)
+
+        self.evaluator.addToPop(child1)
+        self.evaluator.addToPop(child2)
 
     def __str__(self):
         return ("Fitness: "+ str(self.getFitness()) +"\n"+ str(self.labirynth))

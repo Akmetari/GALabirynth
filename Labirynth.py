@@ -61,7 +61,7 @@ class Labirynth(object):
                     print("\033[31m" + str(a) + " ", end="")
                 else:
                     print("\033[37m"+str(a) + " ", end="")
-            print("")
+            print("\033[37m"+"")
 
     def fillLabirynth(self,walls):  # walls in form of tuples representing squares of labirynth eg. (1,3)
         for w in walls:

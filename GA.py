@@ -1,10 +1,9 @@
 from datetime import datetime
 from datetime import timedelta
-
-from Individual import Individual
+from Ind import Individual
 import random
-MUT_CHANCE=1
-CROSS_CHANCE=50
+MUT_CHANCE=0.1
+CROSS_CHANCE=60
 
 
 class GA(object):
@@ -20,8 +19,6 @@ class GA(object):
 
         self.startTime=datetime.now()
         self.timeForRun=runTime
-
-
     def generatePopulation(self, size):
         pop = []
         for i in range(size):
@@ -29,12 +26,17 @@ class GA(object):
         return pop
 
     def cross(self):
-        print("crossover")
+        for ind in self.population:
+            if(random.uniform(0.0,100.0))<CROSS_CHANCE:
+                partner=random.choice(self.population)
+                while partner==ind:
+                    partner= random.choice(self.population)
+
+                ind.cross(partner)
     def mutate(self):
         for ind in self.population:
             if(random.uniform(0.0,100.0))<MUT_CHANCE:
                 ind.mutate()
-
 
     def evaluate(self,ind : Individual)->float: # calculates fitness of individual, we will minimize the function
         pathCheck= ind.labirynth.pathCheck(ind)
@@ -43,10 +45,15 @@ class GA(object):
         solution= 0.2 if ind.labirynth.isSolution(ind) else 1
         startEnd= 0.5 if ind.labirynth.isStartAndEnd(ind) else 1
 
-        fitness= (1/pathWalked) *continous*solution*startEnd *(1/ind.pathLen)
+        fitness= 10*(1/pathWalked) *continous*solution*startEnd # może uwzględniać pitagorejską odległość końca ścieżki od wyjścia labiryntu
 
         return fitness
 
+    def removeFromPop(self,ind):
+        self.population.remove(ind)
+
+    def addToPop(self,ind):
+        self.population.append(ind)
     def countDiversity(self)->float:
         #porównanie fitness, wybranie losowych punktów i sprawdzenie, w ilu miejscach sie różnią?
         return 0
@@ -71,7 +78,8 @@ class GA(object):
             self.cross()
             self.mutate()
             self.findBest()
-            self.log(fileName=self.fileName)
+            self.bestInd.printInd()
+            #self.log(fileName=self.fileName)
 
 
     def findBest(self):
@@ -95,4 +103,4 @@ class GA(object):
             i.printInd()
 
     def stopAfterTime(self):
-        return (self.startTime-datetime.now() >=self.timeForRun)
+        return (datetime.now()-self.startTime >=self.timeForRun)

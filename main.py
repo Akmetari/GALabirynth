@@ -1,7 +1,8 @@
+from datetime import timedelta
+
 from Labirynth import Labirynth
-import Individual as ind
-import random
-from datetime import datetime
+import Ind as ind
+
 from GA import GA
 
 def testLabirynth():
@@ -21,8 +22,15 @@ def testPopulation(ga):
 def testMutation(ga):
     ga.mutate()
 
+def testMainLoop(ga):
+    ga.timeForRun=timedelta(minutes=1)
+    ga.run(ga.stopAfterTime)
+def testCross(ga):
+    ga.printGA()
+    ga.cross()
+    ga.printGA()
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testPopulation(GA(Labirynth(),popSize=50))
+    testMainLoop(GA(Labirynth(),popSize=50))
 
