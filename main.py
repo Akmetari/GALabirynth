@@ -23,14 +23,19 @@ def testMutation(ga):
     ga.mutate()
 
 def testMainLoop(ga):
-    ga.timeForRun=timedelta(minutes=1)
+    ga.timeForRun=timedelta(minutes=30)
     ga.run(ga.stopAfterTime)
 def testCross(ga):
     ga.printGA()
     ga.cross()
     ga.printGA()
-# Press the green button in the gutter to run the script.
+
+def testMatrixSave():
+    lab=Labirynth()
+    strMatrix= "99500900000\n00999990990\n90900890009"
+    lab.saveNewMatrix("D:\code\labirynthGA\GALabirynth\matrix.txt",strMatrix)
+
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testMainLoop(GA(Labirynth(),popSize=50))
+    testMatrixSave()
 

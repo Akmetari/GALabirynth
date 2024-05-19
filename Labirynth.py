@@ -1,6 +1,9 @@
+import json
 
 WALL=9
 EMPTY=0
+START=5
+END=8
 RIGHT=1
 LEFT=3
 UP=2
@@ -50,6 +53,42 @@ class Labirynth(object):
                 r=r+str(a)+" "
             s+=r+"\n"
         return s
+
+    def stringToMatrix(self,string)->list:
+        newMatrix=[]
+        splitStr=string.split("\n")
+        for line in splitStr:
+            newMatrix.append([int(a) for a in list(line)])
+        return newMatrix
+
+    def checkMatrix(self,matrix):
+        return self.checkMatrixLen(matrix) and self.checkOnlyAcceptableSigns(matrix)
+    def checkMatrixLen(self,matrix)->bool:
+        equalLen=True
+        firstRowLen=len(matrix[0])
+        for row in matrix:
+            equalLen=equalLen and len(row)==firstRowLen
+
+        return equalLen
+
+    def checkOnlyAcceptableSigns(self,matrix):
+        goodSigns=True
+        for row in matrix:
+            for a in row:
+                goodSigns=goodSigns and (a==EMPTY or a==WALL or a==START or a==END)
+                if not goodSigns:
+                    return False
+
+        return goodSigns
+
+    def saveNewMatrix(self,filePath,string):
+        newMatrix= self.stringToMatrix(string)
+        if self.checkMatrix(newMatrix):
+            with open(filePath, "w") as file:
+                json.dump(newMatrix,file)
+        else:
+            print("This array has wrong format.")
+            #popup error
 
 
     def printLab(self):
