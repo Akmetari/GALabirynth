@@ -6,9 +6,19 @@ from PyQt5.QtWidgets import *
 
 
 class MainWindow(QMainWindow):
+
+    buttonsY:int =400
+    buttonSizeX: int=101
+    buttonSizeY: int=41
+
+    labelStyle: str= u"padding: 20px;\nbackground-color: rgb(138, 223, 255);\nborder-radius: 5px;\nbox-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\ntransition: transform 0.3s ease, box-shadow 0.3s ease;\noverflow: hidden;"
+    menuStyle: str=u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255))\n"
+    frameStyle: str=u"padding: 20px;\nbackground-color: #ffffff;\nborder-radius: 15px;\nbox-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\ntransition: transform 0.3s ease, box-shadow 0.3s ease;\noverflow: hidden;"
+    buttonStyle: str=u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255));\nborder-color: rgb(85, 170, 255);"
     def __init__(self):
         super(MainWindow,self).__init__()
         self.initUI()
+
 
     def initUI(self):
         self.resize(875, 485)
@@ -20,12 +30,7 @@ class MainWindow(QMainWindow):
 
         self.labirynthFrame = QFrame(self)
         self.labirynthFrame.setGeometry(QRect(40, 50, 411, 321))
-        self.labirynthFrame.setStyleSheet(u"    padding: 20px;\n"
-                                          "    background-color: #ffffff;\n"
-                                          "    border-radius: 15px;\n"
-                                          "    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n"
-                                          "    transition: transform 0.3s ease, box-shadow 0.3s ease;\n"
-                                          "    overflow: hidden;")
+        self.labirynthFrame.setStyleSheet(self.frameStyle)
         self.labirynthFrame.setFrameShape(QFrame.StyledPanel)
         self.labirynthFrame.setFrameShadow(QFrame.Raised)
         self.labirynthLabel = QLabel(self.labirynthFrame)
@@ -37,18 +42,14 @@ class MainWindow(QMainWindow):
     def setButtons(self):
         self.startButton = QPushButton(self)
         self.startButton.setText("Start")
-        self.startButton.setGeometry(QRect(100, 400, 101, 41))
-        self.startButton.setStyleSheet(
-            u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255));\n"
-            "\n"
-            "border-color: rgb(85, 170, 255);")
+        self.startButton.setGeometry(QRect(100, self.buttonsY, self.buttonSizeX, self.buttonSizeY))
+        self.startButton.setStyleSheet(self.buttonStyle)
 
         # stop button
         self.stopButton = QPushButton(self)
         self.stopButton.setText("Stop")
-        self.stopButton.setGeometry(QRect(260, 400, 101, 41))
-        self.stopButton.setStyleSheet(
-            u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255))")
+        self.stopButton.setGeometry(QRect(260, self.buttonsY, self.buttonSizeX, self.buttonSizeY))
+        self.stopButton.setStyleSheet(self.buttonStyle)
     def setMenu(self):
         self.selectFromFileMenu = QAction(self)
         self.selectFromFileMenu.setText("selectFromFileMenu")
@@ -79,48 +80,26 @@ class MainWindow(QMainWindow):
         self.menuBar.addAction(self.menuAlgorithm.menuAction())
         self.menuBar.addAction(self.helpMenu.menuAction())
 
-        self.menuBar.setStyleSheet(
-            u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255))\n"
-            "")
+        self.menuBar.setStyleSheet(self.menuStyle)
     def setDataFrame(self):
         self.dataFrame = QFrame(self)
         self.dataFrame.setGeometry(QRect(510, 50, 331, 391))
-        self.dataFrame.setStyleSheet(u"    padding: 20px;\n"
-                                     "    background-color: #ffffff;\n"
-                                     "    border-radius: 15px;\n"
-                                     "    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n"
-                                     "    transition: transform 0.3s ease, box-shadow 0.3s ease;\n"
-                                     "    overflow: hidden;")
+        self.dataFrame.setStyleSheet(self.frameStyle)
     def setParamLabelsAndValues(self):
         self.param1Label = QLabel(self.dataFrame)
         self.param1Label.setText("Cross chance: ")
         self.param1Label.setGeometry(QRect(20, 40, 120, 21))
-        self.param1Label.setStyleSheet(u"    padding: 20px;\n"
-                                       "background-color: rgb(138, 223, 255);\n"
-                                       "    border-radius: 5px;\n"
-                                       "    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n"
-                                       "    transition: transform 0.3s ease, box-shadow 0.3s ease;\n"
-                                       "    overflow: hidden;")
+        self.param1Label.setStyleSheet(self.labelStyle)
 
         self.param2Label = QLabel(self.dataFrame)
         self.param2Label.setText("Mute chance: ")
         self.param2Label.setGeometry(QRect(20, 99, 120, 21))
-        self.param2Label.setStyleSheet(u"    padding: 20px;\n"
-                                       "background-color: rgb(138, 223, 255);\n"
-                                       "    border-radius: 5px;\n"
-                                       "    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n"
-                                       "    transition: transform 0.3s ease, box-shadow 0.3s ease;\n"
-                                       "    overflow: hidden;")
+        self.param2Label.setStyleSheet(self.labelStyle)
 
         self.param3Label = QLabel(self.dataFrame)
         self.param3Label.setText("Pop size: ")
         self.param3Label.setGeometry(QRect(20, 159, 120, 21))
-        self.param3Label.setStyleSheet(u"    padding: 20px;\n"
-                                       "background-color: rgb(138, 223, 255);\n"
-                                       "    border-radius: 5px;\n"
-                                       "    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n"
-                                       "    transition: transform 0.3s ease, box-shadow 0.3s ease;\n"
-                                       "    overflow: hidden;")
+        self.param3Label.setStyleSheet(self.labelStyle)
 
         self.param1Value = QLabel(self.dataFrame)
         self.param1Value.setGeometry(QRect(200, 40, 101, 20))

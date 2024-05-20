@@ -44,5 +44,5 @@ def testMatrixLoad():
 
 if __name__ == '__main__':
     print("Test labiryntu: ")
-    testMatrixLoad()
+    testMainLoop(GA(Labirynth(),popSize=20))
 
