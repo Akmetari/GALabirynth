@@ -109,11 +109,3 @@ class MainWindow(QMainWindow):
 
         self.param3Value = QLabel(self.dataFrame)
         self.param3Value.setGeometry(QRect(190, 160, 121, 16))
-def window():
-    app=QApplication(sys.argv)
-    win=MainWindow()
-    win.show()
-    sys.exit(app.exec_())
-
-
-window()

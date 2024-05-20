@@ -14,8 +14,8 @@ class Controler(object):
         else:
             self.ui.appRun()
 
-    def setGUI(self, newGUI):
+    def setGUI(self, newGUI:GUI):
         self.ui=newGUI
 
-    def setModel(self, newModel):
+    def setModel(self, newModel: GA):
         self.model=newModel
