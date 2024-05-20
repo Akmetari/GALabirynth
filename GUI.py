@@ -2,11 +2,13 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from mainWIndow import MainWindow
 from helpWindow import HelpWindow
+from getLabDataWindow import LabDataWindow
 
 class GUI(object):
     def __init__(self):
         self.mainWindow=MainWindow()
         self.helpWindow=HelpWindow()
+        self.labDataWindow=LabDataWindow()
         self.app = QApplication(sys.argv)
 
     def appRun(self):
@@ -15,3 +17,6 @@ class GUI(object):
 
     def showHelp(self):
         self.helpWindow.show()
+
+    def showLabData(self):
+        self.labDataWindow.show()
