@@ -1,9 +1,7 @@
 from PyQt5.QtCore import *
-
+import guiFormats
 from PyQt5.QtWidgets import *
 class CreateLabWindow(QWidget):
-    buttonStyle: str = u"background-color: qlineargradient(spread:pad, x1:0.389, y1:0.511, x2:0.383, y2:0, stop:0 rgba(138, 223, 255, 255), stop:1 rgba(255, 255, 255, 255));\nborder-color: rgb(85, 170, 255);"
-    labelStyle: str = u"background-color: rgb(138, 223, 255);\nfont-size: 20px;"
     def __init__(self, legend: list(str,str)):
         super(CreateLabWindow,self).__init__()
         self.initUI(legend)
@@ -43,11 +41,11 @@ class CreateLabWindow(QWidget):
         self.createButton = QPushButton(self)
         self.createButton.setText("Create and save")
         self.createButton.setGeometry(QRect(160, 420, 131, 51))
-        self.createButton.setStyleSheet(self.buttonStyle)
+        self.createButton.setStyleSheet(guiFormats.buttonStyle)
 
     def setTitleLabel(self):
         self.label = QLabel(self)
         self.label.setText("Create labirynth")
         self.label.setGeometry(QRect(0, 29, 541, 41))
-        self.label.setStyleSheet(self.labelStyle)
+        self.label.setStyleSheet(guiFormats.labelStyle)
         self.label.setAlignment(Qt.AlignCenter)

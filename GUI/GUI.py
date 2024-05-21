@@ -4,6 +4,7 @@ from mainWIndow import MainWindow
 from helpWindow import HelpWindow
 from getLabDataWindow import LabDataWindow
 from paramSetWindow import ParamSetWindow
+from createLabirynthWindow import CreateLabWindow
 from popup import PopUp
 
 
@@ -17,6 +18,7 @@ class GUI(object):
         self.helpWindow: HelpWindow =HelpWindow()
         self.labDataWindow: LabDataWindow =LabDataWindow()
         self.paramSetWindow: ParamSetWindow =ParamSetWindow()
+        self.createLabWindow: CreateLabWindow = CreateLabWindow(controller.getLegend())
         self.app = QApplication(sys.argv)
 
     def appRun(self):
