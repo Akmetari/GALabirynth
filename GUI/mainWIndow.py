@@ -103,3 +103,4 @@ class MainWindow(QMainWindow):
 
         self.param3Value = QLabel(self.dataFrame)
         self.param3Value.setGeometry(QRect(190, 160, 121, 16))
+

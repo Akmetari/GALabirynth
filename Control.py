@@ -9,7 +9,7 @@ class Controler(object):
 
 
     def run(self):
-        if self.ui==None or self.mode==None:
+        if self.ui==None or self.model==None:
             print("Program not set. Given parts: "+ str(self.ui) +str(self.model) )
         else:
             self.ui.appRun()
@@ -19,3 +19,24 @@ class Controler(object):
 
     def setModel(self, newModel: GA):
         self.model=newModel
+
+    def getLegend(self)->list[(str,str)]:
+        return [()]
+
+    def stop(self):
+        print("stop")
+
+    def browse(self):
+        print("browse")
+
+    def setLogSettings(self):
+        print("set log settings")
+
+    def setParams(self):
+        print("set alg params")
+
+    def createLab(self):
+        print("create lab")
+
+    def startCreateLab(self):
+        print("start create lab")

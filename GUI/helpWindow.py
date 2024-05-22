@@ -35,6 +35,8 @@ class HelpWindow(QWidget):
         self.okButton.setGeometry(QRect(170, 360, 101, 41))
         self.okButton.setStyleSheet(guiFormats.buttonStyle)
 
+        self.okButton.clicked.connect(self.close())
+
 
     def setLabel(self):
         self.helpLabel = QLabel(self)

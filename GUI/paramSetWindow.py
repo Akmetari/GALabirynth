@@ -13,6 +13,10 @@ class ParamSetWindow(QWidget):
         self.setParamsLabels(list(params.keys()))
         self.setParamValues(list(params.values()))
 
+        self.setButton = QPushButton(self)
+        self.setButton.setText("Set")
+        self.setButton.setGeometry(QRect(72, 250, 101, 31))
+
 
 
     def setTitleLabel(self):

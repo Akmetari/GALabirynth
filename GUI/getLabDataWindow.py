@@ -38,15 +38,16 @@ class LabDataWindow(QWidget):
 
 
     def setSteeringButtons(self):
-        self.startLabCreateButton = QPushButton(self)
-        self.startLabCreateButton.setObjectName("Create")
-        self.startLabCreateButton.setGeometry(QRect(60, 230, 101, 31))
-        self.startLabCreateButton.setStyleSheet(guiFormats.buttonStyle)
+        self.createButton = QPushButton(self)
+        self.createButton.setObjectName("Create")
+        self.createButton.setGeometry(QRect(60, 230, 101, 31))
+        self.createButton.setStyleSheet(guiFormats.buttonStyle)
 
-        self.startLabCancelButton = QPushButton(self)
-        self.startLabCancelButton.setText("Cancel")
-        self.startLabCancelButton.setGeometry(QRect(220, 230, 101, 31))
-        self.startLabCancelButton.setStyleSheet(guiFormats.buttonStyle)
+        self.cancelButton = QPushButton(self)
+        self.cancelButton.setText("Cancel")
+        self.cancelButton.setGeometry(QRect(220, 230, 101, 31))
+        self.cancelButton.setStyleSheet(guiFormats.buttonStyle)
+        self.cancelButton.clicked.connect(self.close())
 
     def setSizeChoice(self):
         self.xSizeLabel = QLabel(self)
