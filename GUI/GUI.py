@@ -17,7 +17,7 @@ class ActionType(Enum):
     stop = 3,
     setParam = 4,
     getLab = 5,
-    createLab = 6,
+    createLab = 6
 
 
 
@@ -57,25 +57,34 @@ class GUI(Subject):
     def showLogSettings(self):
         self.logSettings.show()
 
+    def showGetLabWindow(self):
+        self.getLabWindow.show()
+
     def browse(self):
         print("browse")
 
 
     def notifyRun(self):
         self.notify(ActionType.run)
+
     def notifyStop(self):
         self.notify(ActionType.stop)
+
     def notifySetLog(self):
         self.notify(ActionType.setLog)
         self.logSettings.close()
+
     def notifySetParam(self):
         self.notify(ActionType.setParam)
         self.paramSetWindow.close()
+
     def notifyCreateLab(self):
         self.notify(ActionType.createLab)
         self.createLabWindow.close()
+
     def notifyGetLab(self):
         self.notify(ActionType.getLab)
+
     def connectButtons(self): #connects gui buttons with controler functions
         self.mainWindow.startButton.clicked.connect(self.notifyRun)
         self.mainWindow.stopButton.clicked.connect(self.notifyStop)
@@ -86,14 +95,17 @@ class GUI(Subject):
         self.paramSetWindow.setButton.clicked.connect(self.notifySetParam)
         self.labDataWindow.createButton.clicked.connect(self.showLabCreate)
 
+        self.getLabWindow.browseButton.clicked.connect(self.browse)
+        self.getLabWindow.loadFileButton.clicked.connect(self.notifyGetLab)
+
         self.createLabWindow.createButton.clicked.connect(self.notifyCreateLab)
 
         self.mainWindow.setParametersMenu.triggered.connect(self.showParamSet)
         self.mainWindow.createNewMenu.triggered.connect(self.showLabData)
-        self.mainWindow.selectFromFileMenu.triggered.connect(self.notifyGetLab)
+        self.mainWindow.selectFromFileMenu.triggered.connect(self.showGetLabWindow)
         self.mainWindow.setLogDestinationMenu.triggered.connect(self.showLogSettings)
         self.mainWindow.helpMenu.triggered.connect(self.showHelp)
-        self.getLabWindow
+
 
 
 

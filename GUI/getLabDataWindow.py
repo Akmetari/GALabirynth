@@ -1,5 +1,5 @@
 from PyQt5.QtCore import *
-import guiFormats
+import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 
 class LabDataWindow(QWidget):
@@ -47,7 +47,7 @@ class LabDataWindow(QWidget):
         self.cancelButton.setText("Cancel")
         self.cancelButton.setGeometry(QRect(220, 230, 101, 31))
         self.cancelButton.setStyleSheet(guiFormats.buttonStyle)
-        self.cancelButton.clicked.connect(self.close())
+        self.cancelButton.clicked.connect(self.close)
 
     def setSizeChoice(self):
         self.xSizeLabel = QLabel(self)

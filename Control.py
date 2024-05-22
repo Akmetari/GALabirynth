@@ -1,5 +1,8 @@
+import datetime
+
 from GA import GA
 from GUI import GUI
+from GUI.GUI import ActionType
 from observer import  Observer
 
 class Controler(Observer):
@@ -38,5 +41,22 @@ class Controler(Observer):
     def selectLabFromFile(self):
         print("selectLabFromFile")
 
+    def startAlgorithm(self):
+        self.model.timeForRun=datetime.timedelta(minutes=1)
+        self.model.run(self.model.stopAfterTime)
+
     def react(self, signal):
-        print("reaction: " + str(signal))
+
+        match signal:
+            case ActionType.getLab:
+                self.selectLabFromFile()
+            case ActionType.setLog:
+                self.setLogSettings()
+            case ActionType.run:
+                self.startAlgorithm()
+            case ActionType.setParam:
+                self.setParams()
+            case ActionType.stop:
+                self.stop()
+            case ActionType.createLab:
+                self.createLab()
