@@ -1,11 +1,14 @@
 from GA import GA
 from GUI import GUI
+from observer import  Observer
 
-class Controler(object):
+class Controler(Observer):
 
-    def __init__(self):
+    def __init__(self, newGUI: GUI):
+        Observer.__init__(self)
         self.model: (GA|None)=None
-        self.ui: (GUI|None)=None
+        self.ui: GUI =newGUI
+        self.ui.attach(self)
 
 
     def run(self):
@@ -14,20 +17,11 @@ class Controler(object):
         else:
             self.ui.appRun()
 
-    def setGUI(self, newGUI:GUI):
-        self.ui=newGUI
-
     def setModel(self, newModel: GA):
         self.model=newModel
 
-    def getLegend(self)->list[(str,str)]:
-        return [()]
-
     def stop(self):
         print("stop")
-
-    def browse(self):
-        print("browse")
 
     def setLogSettings(self):
         print("set log settings")
@@ -40,3 +34,9 @@ class Controler(object):
 
     def startCreateLab(self):
         print("start create lab")
+
+    def selectLabFromFile(self):
+        print("selectLabFromFile")
+
+    def react(self, signal):
+        print("reaction: " + str(signal))

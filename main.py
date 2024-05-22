@@ -1,13 +1,16 @@
 from datetime import timedelta
-
 from Labirynth import Labirynth
 import Ind as ind
+from Control import Controler
+from GUI import GUI
 
 from GA import GA
 
+
+
 def testLabirynth():
     lab=Labirynth()
-    lab.printLab() # Press Ctrl+F8 to toggle the breakpoint.
+    lab.printLab()
     return lab
 
 def testIndividual(labirynth):
@@ -43,6 +46,8 @@ def testMatrixLoad():
     print("y: "+str(lab.ySize))
 
 if __name__ == '__main__':
-    print("Test labiryntu: ")
-    testMainLoop(GA(Labirynth(),popSize=20))
+    ctr=Controler(GUI.GUI())
+    ctr.setModel(GA(Labirynth()))
+
+    ctr.run()
 

@@ -1,5 +1,5 @@
 from PyQt5.QtCore import *
-import guiFormats
+import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 class ParamSetWindow(QWidget):
     def __init__(self, paramNames: dict[str,(float,float,float)]= {"Cross chance": (60.0,0.0,100.0), "Mutation chance": (0.001,0.0,100.0), "Pop size": (10.0,10.0,100000.0)}):

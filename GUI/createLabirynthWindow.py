@@ -1,16 +1,16 @@
 from PyQt5.QtCore import *
-import guiFormats
+import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 class CreateLabWindow(QWidget):
-    def __init__(self, legend: list(str,str)):
+    def __init__(self ):
         super(CreateLabWindow,self).__init__()
-        self.initUI(legend)
+        self.initUI()
 
 
 
-    def initUI(self, legend):
+    def initUI(self):
         self.resize(534, 497)
-        self.setLegend(legend)
+        self.setLegend()
         self.setCreateButton()
         self.setTitleLabel()
 
@@ -19,7 +19,7 @@ class CreateLabWindow(QWidget):
 
 
 
-    def setLegend(self, symbols: list[(str,str)]): # tuples of name and symbol representing different parts of labirynth
+    def setLegend(self, symbols: list[(str,str)] = [("Wall","9"),("Empty","0"), ("Right","1"),("Left","3"), ("Up","2"), ("Down","4")]): # tuples of name and symbol representing different parts of labirynth
         self.wallLegend = QLabel(self)
         self.wallLegend.setText("Legend")
         self.wallLegend.setGeometry(QRect(420, 170, 51, 31))

@@ -1,4 +1,4 @@
-import guiFormats
+import GUI.guiFormats as guiFormats
 from PyQt5.QtCore import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
@@ -9,8 +9,9 @@ class MainWindow(QMainWindow):
     buttonsY:int =400
     buttonSizeX: int=101
     buttonSizeY: int=41
+
     def __init__(self):
-        super(MainWindow,self).__init__()
+        super(MainWindow, self).__init__()
         self.initUI()
 
 
@@ -46,13 +47,13 @@ class MainWindow(QMainWindow):
         self.stopButton.setStyleSheet(guiFormats.buttonStyle)
     def setMenu(self):
         self.selectFromFileMenu = QAction(self)
-        self.selectFromFileMenu.setText("selectFromFileMenu")
+        self.selectFromFileMenu.setText(r"Select labirynth from file")
         self.createNewMenu = QAction(self)
-        self.createNewMenu.setText("createNewMenu")
+        self.createNewMenu.setText("Create new labirynth")
         self.setParametersMenu = QAction(self)
-        self.setParametersMenu.setText("setParametersMenu")
+        self.setParametersMenu.setText("Set parameters")
         self.setLogDestinationMenu = QAction(self)
-        self.setLogDestinationMenu.setText("setLogDestinationMenu")
+        self.setLogDestinationMenu.setText("Set log destination")
 
         self.menuBar = QMenuBar(self)
         self.setMenuBar(self.menuBar)
@@ -61,9 +62,8 @@ class MainWindow(QMainWindow):
         self.menuLabirynth.setTitle("Labirynth")
         self.menuAlgorithm = QMenu(self.menuBar)
         self.menuAlgorithm.setTitle("Algorithm")
-        self.helpMenu = QMenu(self.menuBar)
-        self.helpMenu.setTitle("Help")
-        self.helpMenu.setBaseSize(QSize(0, 4))
+        self.helpMenu = QAction(self.menuBar)
+        self.helpMenu.setText("Help")
 
         self.menuLabirynth.addAction(self.selectFromFileMenu)
         self.menuLabirynth.addAction(self.createNewMenu)
@@ -72,7 +72,7 @@ class MainWindow(QMainWindow):
 
         self.menuBar.addAction(self.menuLabirynth.menuAction())
         self.menuBar.addAction(self.menuAlgorithm.menuAction())
-        self.menuBar.addAction(self.helpMenu.menuAction())
+        self.menuBar.addAction(self.helpMenu)
 
         self.menuBar.setStyleSheet(guiFormats.menuStyle)
     def setDataFrame(self):

@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-import guiFormats
+import GUI.guiFormats as guiFormats
 
 class PopUp(QWidget):
     def __init__(self, text):

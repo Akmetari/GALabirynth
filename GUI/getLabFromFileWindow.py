@@ -1,0 +1,3 @@
+
+
+class LabFromFileWindow(QWidget):
