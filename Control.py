@@ -1,7 +1,7 @@
 import datetime
 
 from GA import GA
-from GUI import GUI
+from GUI.GUI import GUI
 from GUI.GUI import ActionType
 from observer import  Observer
 
@@ -33,13 +33,17 @@ class Controler(Observer):
         print("set alg params")
 
     def createLab(self):
+        if self.ui.data.checkLab():
+            self.model.labirynth.saveNewMatrix(self.ui.data.saveDir,self.ui.data.userLabirynth)
+        else:
+            self.ui.showPopUp("Wrong labirynth format. Check size and used symbols.")
         print("create lab")
-
-    def startCreateLab(self):
-        print("start create lab")
 
     def selectLabFromFile(self):
         print("selectLabFromFile")
+        self.model.labirynth.loadMatrixFromFile(self.ui.data.getLabDir)
+        self.ui.data.rawLabirynth=self.model.labirynth.__str__()
+        self.ui.refresh()
 
     def startAlgorithm(self):
         self.model.timeForRun=datetime.timedelta(minutes=1)

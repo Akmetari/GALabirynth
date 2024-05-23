@@ -1,10 +1,12 @@
 from PyQt5.QtCore import *
 import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
+
 class CreateLabWindow(QWidget):
-    def __init__(self ):
+    def __init__(self , parent=None):
         super(CreateLabWindow,self).__init__()
         self.initUI()
+        self.parent=parent
 
 
 
@@ -33,15 +35,20 @@ class CreateLabWindow(QWidget):
 
             legendValue = QLabel(self)
             legendValue.setText(s[1])
-            legendValue.setGeometry(QRect(420, 200+i*20, 51, 31))
+            legendValue.setGeometry(QRect(480, 200+i*20, 51, 31))
 
             i+=1
+
+    def exportLabirynth(self):
+        self.parent.data.userLabirynth=self.labirynthCreateInput.toPlainText()
 
     def setCreateButton(self):
         self.createButton = QPushButton(self)
         self.createButton.setText("Create and save")
         self.createButton.setGeometry(QRect(160, 420, 131, 51))
         self.createButton.setStyleSheet(guiFormats.buttonStyle)
+        self.createButton.clicked.connect(self.exportLabirynth)
+        self.createButton.clicked.connect(self.close)
 
     def setTitleLabel(self):
         self.label = QLabel(self)

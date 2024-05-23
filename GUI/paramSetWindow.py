@@ -1,13 +1,15 @@
 from PyQt5.QtCore import *
 import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
+
 class ParamSetWindow(QWidget):
-    def __init__(self, paramNames: dict[str,(float,float,float)]= {"Cross chance": (60.0,0.0,100.0), "Mutation chance": (0.001,0.0,100.0), "Pop size": (10.0,10.0,100000.0)}):
+    def __init__(self, parent=None, paramNames: dict[str,(float,float,float)]= {"Cross chance": (60.0,0.0,100.0), "Mutation chance": (0.001,0.0,100.0), "Pop size": (10.0,10.0,100000.0)}):
         super(ParamSetWindow, self).__init__()
         self.initUI(paramNames)
+        self.parent=parent
 
     def initUI(self, params: dict):
-        self.resize(250, 260)
+        self.resize(250, 300)
 
         self.setTitleLabel()
         self.setParamsLabels(list(params.keys()))
@@ -33,8 +35,8 @@ class ParamSetWindow(QWidget):
         for name in paramNames:
             label=QLabel(self)
             label.setText(name+ ": ")
-            label.setGeometry(QRect(10, 160+(i*40), 141, 21))
-            label.setStyleSheet(guiFormats.labelStyle)
+            label.setGeometry(QRect(10, 110+(i*40), 140, 25))
+            label.setStyleSheet(guiFormats.smolLabelStyle)
             self.params.append(label)
             i+=1
 
@@ -50,6 +52,6 @@ class ParamSetWindow(QWidget):
             box.setValue(val)
             box.setMaximum(max)
             box.setMinimum(min)
-            box.setGeometry(QRect(10, 160 + (i * 40), 141, 21))
+            box.setGeometry(QRect(170, 110 + (i * 40), 60, 25))
             self.paramValues.append(box)
             i += 1

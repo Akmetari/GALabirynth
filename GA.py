@@ -10,6 +10,7 @@ class GA(object):
 
     def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth", runTime=timedelta(hours=1)  ):
         self.labirynth=labirynth
+        self.popSize=popSize
         self.population= self.generatePopulation(popSize)
         self.logDest=logDest
         self.fileName="log.txt"
@@ -72,7 +73,9 @@ class GA(object):
         return "Log"
 
     def run(self, stopPred):
-        self.fileName="labirynthGenAlg"+ str(datetime.now().timestamp())+".txt"
+        self.startTime = datetime.now()
+        self.fileName="labirynthGenAlg"+ str(self.startTime.timestamp())+".txt"
+        self.population=self.generatePopulation(self.popSize)
 
         while not stopPred():
             self.cross()

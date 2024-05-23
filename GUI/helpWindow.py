@@ -6,9 +6,10 @@ class HelpWindow(QWidget):
 
     helpText:str="help text"
 
-    def __init__(self):
+    def __init__(self, parent =None):
         super(HelpWindow, self).__init__()
         self.initUI()
+        self.parent=parent
 
     def initUI(self):
         self.resize(454, 419)

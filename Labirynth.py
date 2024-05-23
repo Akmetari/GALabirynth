@@ -110,6 +110,17 @@ class Labirynth(object):
         with open(filePath, "r") as file:
             self.matrix=json.load(file)
 
+        y=0
+        for row in self.matrix:
+            x=0
+            for el in row:
+                if el==START:
+                    self.startPoint=(x,y)
+                elif el==END:
+                    self.endPoint = (x, y)
+                x += 1
+            y += 1
+
         self.xSize=len(self.matrix[0])
         self.ySize=len(self.matrix)
 

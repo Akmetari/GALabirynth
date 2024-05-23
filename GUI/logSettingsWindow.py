@@ -1,13 +1,14 @@
-
 import GUI.guiFormats as guiFormats
 from PyQt5.QtCore import *
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
+
 class LogSettingsWindow(QWidget):
 
-    def __init__(self):
+    def __init__(self, parent=None):
         super(LogSettingsWindow,self).__init__()
         self.initUI()
+        self.parent=parent
     def initUI(self):
         self.resize(400, 308)
 
@@ -18,12 +19,10 @@ class LogSettingsWindow(QWidget):
         self.setTitles()
         self.setCheckBoxes()
 
-
-
-
-
-
-
+    def browse(self, path: str = "C:/"):
+        self.fileDialog = QFileDialog(self)
+        fName = self.fileDialog.getOpenFileName(self, "Browse", "D:/code", "Text files (*.txt)")
+        self.pathLine.setText(fName[0])
 
     def setButtons(self):
         self.setButton = QPushButton(self)
@@ -35,6 +34,8 @@ class LogSettingsWindow(QWidget):
         self.browseButton.setText("Browse")
         self.browseButton.setGeometry(QRect(290, 210, 93, 28))
         self.browseButton.setStyleSheet(guiFormats.buttonStyle)
+
+        self.browseButton.clicked.connect(self.browse)
 
     def setCheckBoxes(self):
         self.logGenerationsBox = QCheckBox(self)

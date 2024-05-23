@@ -62,16 +62,15 @@ class Individual(object):
         yEnd=random.randint(yStart,self.labirynth.ySize-1)
 
         child1=Individual(self.evaluator,generate=False)
+        child1.labirynth= copy.deepcopy(self.labirynth)
         child2=Individual(self.evaluator, generate=False)
+        child2.labirynth = copy.deepcopy(partner.labirynth)
 
-        for i in range(0,self.labirynth.ySize):
-            for j in range (0, self.labirynth.xSize):
+        for i in range(yStart,yEnd):
+            for j in range (xStart, xEnd):
                 if i in range(yStart,yEnd) and j in range(xStart, xEnd):
-                    child1.labirynth.matrix[i][j]=self.labirynth.matrix[i][j]
-                    child2.labirynth.matrix[i][j]=partner.labirynth.matrix[i][j]
-                else:
-                    child2.labirynth.matrix[i][j] = self.labirynth.matrix[i][j]
-                    child1.labirynth.matrix[i][j] = partner.labirynth.matrix[i][j]
+                    child2.labirynth.matrix[i][j]=self.labirynth.matrix[i][j]
+                    child1.labirynth.matrix[i][j]=partner.labirynth.matrix[i][j]
 
         self.evaluator.removeFromPop(partner)
         self.evaluator.removeFromPop(self)

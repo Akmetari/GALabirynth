@@ -2,7 +2,7 @@ from datetime import timedelta
 from Labirynth import Labirynth
 import Ind as ind
 from Control import Controler
-from GUI import GUI
+from GUI.GUI import GUI
 
 from GA import GA
 
@@ -46,7 +46,7 @@ def testMatrixLoad():
     print("y: "+str(lab.ySize))
 
 if __name__ == '__main__':
-    ctr=Controler(GUI.GUI())
+    ctr=Controler(GUI())
     ctr.setModel(GA(Labirynth()))
 
     ctr.run()

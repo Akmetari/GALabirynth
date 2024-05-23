@@ -10,6 +10,7 @@ from GUI.getLabFromFileWindow import LabFromFileWindow
 from GUI.popup import PopUp
 from GUI.subject import Subject
 from enum import Enum
+from data import Data
 
 class ActionType(Enum):
     setLog= 1,
@@ -26,14 +27,15 @@ class GUI(Subject):
         Subject.__init__(self)
 
         self.app = QApplication(sys.argv)
+        self.data=Data()
 
-        self.mainWindow: MainWindow =MainWindow()
-        self.helpWindow: HelpWindow =HelpWindow()
-        self.labDataWindow: LabDataWindow =LabDataWindow()
-        self.paramSetWindow: ParamSetWindow =ParamSetWindow()
-        self.createLabWindow: CreateLabWindow = CreateLabWindow()
-        self.logSettings: LogSettingsWindow = LogSettingsWindow()
-        self.getLabWindow: LabFromFileWindow = LabFromFileWindow()
+        self.mainWindow: MainWindow =MainWindow(self)
+        self.helpWindow: HelpWindow =HelpWindow(self)
+        self.labDataWindow: LabDataWindow =LabDataWindow(self)
+        self.paramSetWindow: ParamSetWindow =ParamSetWindow(self)
+        self.createLabWindow: CreateLabWindow = CreateLabWindow(self)
+        self.logSettings: LogSettingsWindow = LogSettingsWindow(self)
+        self.getLabWindow: LabFromFileWindow = LabFromFileWindow(self)
 
         self.connectButtons()
 
@@ -60,9 +62,9 @@ class GUI(Subject):
     def showGetLabWindow(self):
         self.getLabWindow.show()
 
-    def browse(self):
-        print("browse")
-
+    def showPopUp(self,text):
+        self.popUp=PopUp(text)
+        self.popUp.show()
 
     def notifyRun(self):
         self.notify(ActionType.run)
@@ -84,18 +86,18 @@ class GUI(Subject):
 
     def notifyGetLab(self):
         self.notify(ActionType.getLab)
+        self.getLabWindow.close()
 
     def connectButtons(self): #connects gui buttons with controler functions
         self.mainWindow.startButton.clicked.connect(self.notifyRun)
         self.mainWindow.stopButton.clicked.connect(self.notifyStop)
 
-        self.logSettings.browseButton.clicked.connect(self.browse)
         self.logSettings.setButton.clicked.connect(self.notifySetLog)
 
         self.paramSetWindow.setButton.clicked.connect(self.notifySetParam)
         self.labDataWindow.createButton.clicked.connect(self.showLabCreate)
+        self.labDataWindow.createButton.clicked.connect(self.labDataWindow.close)
 
-        self.getLabWindow.browseButton.clicked.connect(self.browse)
         self.getLabWindow.loadFileButton.clicked.connect(self.notifyGetLab)
 
         self.createLabWindow.createButton.clicked.connect(self.notifyCreateLab)
@@ -105,6 +107,12 @@ class GUI(Subject):
         self.mainWindow.selectFromFileMenu.triggered.connect(self.showGetLabWindow)
         self.mainWindow.setLogDestinationMenu.triggered.connect(self.showLogSettings)
         self.mainWindow.helpMenu.triggered.connect(self.showHelp)
+
+
+    def refresh(self):
+        self.mainWindow.labirynthLabel.setText(self.data.rawLabirynth)
+        self.mainWindow.labirynthLabel.update()
+
 
 
 
