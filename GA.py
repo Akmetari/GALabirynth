@@ -1,3 +1,4 @@
+import os.path
 import threading
 from datetime import datetime
 from datetime import timedelta
@@ -9,13 +10,13 @@ import random
 class GA(object):
     MUT_CHANCE = 0.1
     CROSS_CHANCE = 60
-    TIME= 3600 #time is seconds
+    TIME= 3600 #time in seconds
     POP_SIZE=100
-    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth", runTime=timedelta(seconds=TIME)  ):
+    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth\\", runTime=timedelta(seconds=TIME)  ):
         self.labirynth=labirynth
         self.population= self.generatePopulation(popSize)
         self.logDest=logDest
-        self.fileName="log.txt"
+        self.fileName="logText.txt"
         self.bestInd:Individual=None
         self.bestFit=100
         self.diversityLevel=0
@@ -64,16 +65,12 @@ class GA(object):
     def setLogDest(self,dest):
         self.logDest=dest
     def log(self, fileName=""):
-
-        # stworzyć plik jeśli nie istnieje AAAAAAAAAAAAAAAAAAAAAA
-        if fileName=="":
-            fileName=self.fileName
-
-        with open(self.logDest+fileName,"w") as file:
+        filePath:str=self.logDest+fileName
+        with open(filePath,"w") as file:
             file.write(self.generateLog())
 
     def generateLog(self)->str:
-        return "Log"
+        return ""+str(datetime.now().timestamp())+" popS: "+str(self.POP_SIZE)+" fit: "+str(self.bestFit)+" div: "+str(self.countDiversity())
 
     def run(self, stopPred):
         self.startTime = datetime.now()
@@ -88,7 +85,7 @@ class GA(object):
             self.mutate()
             self.findBest()
          #   self.bestInd.printInd()
-            #self.log(fileName=self.fileName)
+            self.log(fileName=self.fileName)
 
     def findBest(self):
         bestFit=self.population[0].getFitness()
