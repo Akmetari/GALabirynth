@@ -3,13 +3,14 @@ import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 
 class ParamSetWindow(QWidget):
-    def __init__(self, parent=None, paramNames: dict[str,(float,float,float)]= {"Cross chance": (60.0,0.0,100.0), "Mutation chance": (0.001,0.0,100.0), "Pop size": (10.0,10.0,100000.0)}):
+    def __init__(self, parent=None, paramNames: dict[str,(float,float)]= {"Cross chance": (0.0,100.0), "Mutation chance": (0.0,100.0), "Pop size": (10.0,100000.0), "Time":(1.0,360000)}):
         super(ParamSetWindow, self).__init__()
+        self.parent = parent
         self.initUI(paramNames)
-        self.parent=parent
+
 
     def initUI(self, params: dict):
-        self.resize(250, 300)
+        self.resize(270, 340)
 
         self.setTitleLabel()
         self.setParamsLabels(list(params.keys()))
@@ -17,14 +18,14 @@ class ParamSetWindow(QWidget):
 
         self.setButton = QPushButton(self)
         self.setButton.setText("Set")
-        self.setButton.setGeometry(QRect(72, 250, 101, 31))
+        self.setButton.setGeometry(QRect(72, 270, 101, 31))
 
 
 
     def setTitleLabel(self):
         self.setParamsLabel = QLabel(self)
         self.setParamsLabel.setText("Set parameters")
-        self.setParamsLabel.setGeometry(QRect(0, 40, 251, 51))
+        self.setParamsLabel.setGeometry(QRect(0, 40, 280, 51))
         self.setParamsLabel.setStyleSheet(guiFormats.labelStyle)
         self.setParamsLabel.setAlignment(Qt.AlignCenter)
 
@@ -46,12 +47,12 @@ class ParamSetWindow(QWidget):
 
         for valueTuple in paramValues:
             box = QDoubleSpinBox(self)
-            val=valueTuple[0]
-            min=valueTuple[1]
-            max=valueTuple[2]
+            val=self.parent.data.algParams[i]
+            min=valueTuple[0]
+            max=valueTuple[1]
             box.setValue(val)
             box.setMaximum(max)
             box.setMinimum(min)
-            box.setGeometry(QRect(170, 110 + (i * 40), 60, 25))
+            box.setGeometry(QRect(170, 110 + (i * 40), 90, 25))
             self.paramValues.append(box)
             i += 1

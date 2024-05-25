@@ -1,5 +1,6 @@
-import datetime
-
+import datetime as dt
+from datetime import datetime
+import threading
 from GA import GA
 from GUI.GUI import GUI
 from GUI.GUI import ActionType
@@ -12,7 +13,7 @@ class Controler(Observer):
         self.model: (GA|None)=None
         self.ui: GUI =newGUI
         self.ui.attach(self)
-
+        self.stop: bool=False
 
     def run(self):
         if self.ui==None or self.model==None:
@@ -23,14 +24,21 @@ class Controler(Observer):
     def setModel(self, newModel: GA):
         self.model=newModel
 
-    def stop(self):
-        print("stop")
-
+    def setDefaultData(self):
+        self.ui.data.algParams=[self.model.CROSS_CHANCE,self.model.MUT_CHANCE,self.model.popSize]
     def setLogSettings(self):
-        print("set log settings")
+        print("set log params")
+
 
     def setParams(self):
         print("set alg params")
+        self.ui.data.algParams = [x.value() for x in self.ui.paramSetWindow.paramValues]
+        self.model.CROSS_CHANCE = self.ui.data.algParams[0]
+        self.model.MUT_CHANCE = self.ui.data.algParams[1]
+        self.model.POP_SIZE = int(self.ui.data.algParams[2])
+        self.model.TIME = int(self.ui.data.algParams[3])
+
+        self.ui.refresh()
 
     def createLab(self):
         if self.ui.data.checkLab():
@@ -45,9 +53,40 @@ class Controler(Observer):
         self.ui.data.rawLabirynth=self.model.labirynth.__str__()
         self.ui.refresh()
 
+
+    def stopAlg(self)->bool:
+        return self.model.stopAfterTime() or self.stop
+
+    def printLab(self):
+        self.deltaOfUpdates: dt.timedelta = dt.timedelta(seconds=2)
+        self.lastUpdate: datetime = datetime.now()
+        while not self.stop:
+            print("run")
+            if(datetime.now()-self.lastUpdate)>=self.deltaOfUpdates:
+                with self.model.lock:
+                    self.lastUpdate = datetime.now()
+                    self.ui.data.formatedLabirynth=str(self.model.bestInd.labirynth)
+                    self.ui.mainWindow.labirynthLabel.setText(self.ui.data.formatedLabirynth)
+
+
+
     def startAlgorithm(self):
-        self.model.timeForRun=datetime.timedelta(minutes=1)
-        self.model.run(self.model.stopAfterTime)
+        self.stop=False
+        self.model.timeForRun = dt.timedelta(minutes=1)
+        self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,))
+        self.algRun.start()
+
+        self.labRefr: threading.Thread=threading.Thread(target=self.printLab, args=())
+        self.labRefr.start()
+
+
+
+
+
+
+
+
+
 
     def react(self, signal):
 
@@ -61,6 +100,6 @@ class Controler(Observer):
             case ActionType.setParam:
                 self.setParams()
             case ActionType.stop:
-                self.stop()
+                self.stop=True
             case ActionType.createLab:
                 self.createLab()

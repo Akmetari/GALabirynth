@@ -4,7 +4,12 @@ from PyQt5.QtWidgets import *
 
 class HelpWindow(QWidget):
 
-    helpText:str="help text"
+    helpText:str=("If you start algorithm without labirynth,it will run on a default one.\n"
+                  "Pick labirynth: Labirynth -> Select labirynth from file\n"
+                  "Create your own labirynth: Labirynth -> Create labirynth\n"
+                  "Change algorithm or logging parameters: Algorithm menu.\n\n"
+                  "App created by Alicja Huk")
+
 
     def __init__(self, parent =None):
         super(HelpWindow, self).__init__()
@@ -21,15 +26,14 @@ class HelpWindow(QWidget):
     def setHelpFrame(self):
         self.helpFrame = QFrame(self)
         self.helpFrame.setGeometry(QRect(20, 100, 411, 251))
-        self.helpFrame.setStyleSheet(guiFormats.frameStyle)
-        self.helpFrame.setFrameShape(QFrame.StyledPanel)
-        self.helpFrame.setFrameShadow(QFrame.Raised)
+        self.helpFrame.setStyleSheet(guiFormats.thinFrameStyle)
 
     def setText(self,text: str):
         self.helpTextLabel = QLabel(self.helpFrame)
+        self.helpTextLabel.setGeometry(QRect(20, 20, 400, 200))
         self.helpTextLabel.setText(text)
-        self.helpTextLabel.setGeometry(QRect(20, 20, 361, 211))
-        self.helpTextLabel.setAlignment(Qt.AlignCenter)
+        self.helpTextLabel.adjustSize()
+        self.helpTextLabel.setAlignment(Qt.AlignLeft)
     def setOkButton(self):
         self.okButton = QPushButton(self)
         self.okButton.setText("Ok")

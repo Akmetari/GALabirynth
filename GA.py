@@ -1,22 +1,25 @@
+import threading
 from datetime import datetime
 from datetime import timedelta
 from Ind import Individual
 import random
-MUT_CHANCE=0.1
-CROSS_CHANCE=60
+
 
 
 class GA(object):
-
-    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth", runTime=timedelta(hours=1)  ):
+    MUT_CHANCE = 0.1
+    CROSS_CHANCE = 60
+    TIME= 3600 #time is seconds
+    POP_SIZE=100
+    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth", runTime=timedelta(seconds=TIME)  ):
         self.labirynth=labirynth
-        self.popSize=popSize
         self.population= self.generatePopulation(popSize)
         self.logDest=logDest
         self.fileName="log.txt"
-        self.bestInd=None
+        self.bestInd:Individual=None
         self.bestFit=100
         self.diversityLevel=0
+        self.lock = threading.Lock()
 
         self.startTime=datetime.now()
         self.timeForRun=runTime
@@ -28,7 +31,7 @@ class GA(object):
 
     def cross(self):
         for ind in self.population:
-            if(random.uniform(0.0,100.0))<CROSS_CHANCE:
+            if(random.uniform(0.0,100.0))<self.CROSS_CHANCE:
                 partner=random.choice(self.population)
                 while partner==ind:
                     partner= random.choice(self.population)
@@ -36,7 +39,7 @@ class GA(object):
                 ind.cross(partner)
     def mutate(self):
         for ind in self.population:
-            if(random.uniform(0.0,100.0))<MUT_CHANCE:
+            if(random.uniform(0.0,100.0))<self.MUT_CHANCE:
                 ind.mutate()
 
     def evaluate(self,ind : Individual)->float: # calculates fitness of individual, we will minimize the function
@@ -75,15 +78,17 @@ class GA(object):
     def run(self, stopPred):
         self.startTime = datetime.now()
         self.fileName="labirynthGenAlg"+ str(self.startTime.timestamp())+".txt"
-        self.population=self.generatePopulation(self.popSize)
+        self.population=self.generatePopulation(self.POP_SIZE)
+        self.findBest()
+
+
 
         while not stopPred():
             self.cross()
             self.mutate()
             self.findBest()
-            self.bestInd.printInd()
+         #   self.bestInd.printInd()
             #self.log(fileName=self.fileName)
-
 
     def findBest(self):
         bestFit=self.population[0].getFitness()
@@ -95,8 +100,9 @@ class GA(object):
                 bestFit= newFit
                 bestInd=ind
 
-        self.bestInd=bestInd
-        self.bestFit=bestFit
+        with self.lock:
+            self.bestInd=bestInd
+            self.bestFit=bestFit
 
     def printGA(self):
         print("Labirynth: ")

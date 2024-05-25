@@ -110,8 +110,12 @@ class GUI(Subject):
 
 
     def refresh(self):
-        self.mainWindow.labirynthLabel.setText(self.data.rawLabirynth)
-        self.mainWindow.labirynthLabel.update()
+        #self.mainWindow.labirynthLabel.setText(self.data.formatedLabirynth)
+        self.mainWindow.param1Value.setText(str(self.data.algParams[0]))
+        self.mainWindow.param2Value.setText(str(self.data.algParams[1]))
+        self.mainWindow.param3Value.setText(str(self.data.algParams[2]))
+        self.mainWindow.param4Value.setText(str(self.data.algParams[3]))
+        self.mainWindow.update()
 
 
 

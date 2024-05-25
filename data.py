@@ -1,4 +1,4 @@
-
+from GA import GA as ga
 
 class Data():
 
@@ -19,7 +19,7 @@ class Data():
     logParams: list[bool]=[]
 
     #algorithm:
-    algParams:list[(str,float)]=[]
+    algParams:list[float]=[ga.CROSS_CHANCE,ga.MUT_CHANCE,ga.POP_SIZE, ga.TIME]
 
     def __init__(self):
         print("")

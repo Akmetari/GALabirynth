@@ -10,9 +10,11 @@ class MainWindow(QMainWindow):
     buttonSizeX: int=101
     buttonSizeY: int=41
 
-    def __init__(self):
+    def __init__(self, parent=None):
         super(MainWindow, self).__init__()
+        self.myParent = parent
         self.initUI()
+
 
 
     def initUI(self):
@@ -82,25 +84,38 @@ class MainWindow(QMainWindow):
     def setParamLabelsAndValues(self):
         self.param1Label = QLabel(self.dataFrame)
         self.param1Label.setText("Cross chance: ")
-        self.param1Label.setGeometry(QRect(20, 40, 120, 21))
-        self.param1Label.setStyleSheet(guiFormats.labelStyle)
+        self.param1Label.setGeometry(QRect(20, 40, 120, 25))
+        self.param1Label.setStyleSheet(guiFormats.smolLabelStyle)
 
         self.param2Label = QLabel(self.dataFrame)
         self.param2Label.setText("Mute chance: ")
-        self.param2Label.setGeometry(QRect(20, 99, 120, 21))
-        self.param2Label.setStyleSheet(guiFormats.labelStyle)
+        self.param2Label.setGeometry(QRect(20, 99, 120, 25))
+        self.param2Label.setStyleSheet(guiFormats.smolLabelStyle)
 
         self.param3Label = QLabel(self.dataFrame)
         self.param3Label.setText("Pop size: ")
-        self.param3Label.setGeometry(QRect(20, 159, 120, 21))
-        self.param3Label.setStyleSheet(guiFormats.labelStyle)
+        self.param3Label.setGeometry(QRect(20, 159, 120, 25))
+        self.param3Label.setStyleSheet(guiFormats.smolLabelStyle)
+
+        self.param4Label = QLabel(self.dataFrame)
+        self.param4Label.setText("Time (seconds): ")
+        self.param4Label.setGeometry(QRect(20, 219, 120, 25))
+        self.param4Label.setStyleSheet(guiFormats.smolLabelStyle)
+
 
         self.param1Value = QLabel(self.dataFrame)
         self.param1Value.setGeometry(QRect(200, 40, 101, 20))
+        self.param1Value.setText(str(self.myParent.data.algParams[0]))
 
         self.param2Value = QLabel(self.dataFrame)
         self.param2Value.setGeometry(QRect(190, 100, 131, 16))
+        self.param2Value.setText(str(self.myParent.data.algParams[1]))
 
         self.param3Value = QLabel(self.dataFrame)
         self.param3Value.setGeometry(QRect(190, 160, 121, 16))
+        self.param3Value.setText(str(self.myParent.data.algParams[2]))
+
+        self.param4Value = QLabel(self.dataFrame)
+        self.param4Value.setGeometry(QRect(190, 220, 121, 16))
+        self.param4Value.setText(str(self.myParent.data.algParams[3]))
 
