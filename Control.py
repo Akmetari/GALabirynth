@@ -40,9 +40,9 @@ class Controler(Observer):
         self.ui.data.algParams = [x.value() for x in self.ui.paramSetWindow.paramValues]
         self.model.CROSS_CHANCE = self.ui.data.algParams[0]
         self.model.MUT_CHANCE = self.ui.data.algParams[1]
-        self.model.POP_SIZE = int(self.ui.data.algParams[2])
+        self.model.POP_SIZE = round(self.ui.data.algParams[2])
         self.model.generatePopulation(self.model.POP_SIZE)
-        self.model.TIME = int(self.ui.data.algParams[3])
+        self.model.TIME = round(self.ui.data.algParams[3])
 
         self.ui.refresh()
 
