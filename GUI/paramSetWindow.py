@@ -2,6 +2,7 @@ from PyQt5.QtCore import *
 import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 
+
 class ParamSetWindow(QWidget):
     def __init__(self, parent=None, paramNames: dict[str,(float,float)]= {"Cross chance": (0.0,100.0), "Mutation chance": (0.0,100.0), "Pop size": (10.0,100000.0), "Time":(1.0,360000)}):
         super(ParamSetWindow, self).__init__()

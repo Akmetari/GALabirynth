@@ -3,12 +3,13 @@ from PyQt5.QtWidgets import *
 import GUI.guiFormats as guiFormats
 
 
+
 class PopUp(QWidget):
-    def __init__(self, text, parent=None):
+    def __init__(self, text:str, parent=None):
         super(PopUp,self).__init__()
         self.setupUi(text)
         self.parent=parent
-    def setupUi(self, text):
+    def setupUi(self, text:str):
         self.resize(400, 137)
         self.okButton = QPushButton(self)
         self.okButton.setText("Ok")

@@ -1,9 +1,9 @@
-from GA import GA as ga
+from model.GA import GA as ga
 
 class Data():
 
     #labirynth display
-    getLabDir:str="D:/code/"
+    getLabDir:str="D:\code\labirynthGA\GALabirynth\labirynths\\"
     rawLabirynth:str=""
     formatedLabirynth:str=""
 
@@ -11,11 +11,11 @@ class Data():
     saveDir:str=""
     xSize:int=1
     ySize:int=1
-    legend: list[(str,str)]=[("Wall","9"),("Empty","0"), ("Right","1"),("Left","3"), ("Up","2"), ("Down","4"), ("Start","5"), ("End","8")]
+    legend: list[(str,str)]=[("Wall","9"),("Empty","0"),("Start","5"), ("End","8")]
     userLabirynth:str=""
 
     #log settings:
-    logDir:str=""
+    logDir:str="D:\code\labirynthGA\GALabirynth\logs\\"
     logParams: list[bool]=[]
 
     #algorithm:
@@ -25,7 +25,7 @@ class Data():
         print("")
 
 
-    def checkLab(self)->bool:
+    def checkLab(self)->bool: #checks if labirynth user inputed is correct due to its inputed size and characters allowed in labirynth definition
         labList= self.userLabirynth.split("\n")
         goodSize = len(labList)==self.ySize
         for row in labList:

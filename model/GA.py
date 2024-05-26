@@ -2,29 +2,29 @@ import os.path
 import threading
 from datetime import datetime
 from datetime import timedelta
-from Ind import Individual
+from typing import Callable
+
+from model.Ind import Individual
+from model.Labirynth import Labirynth
 import random
-
-
-
 class GA(object):
     MUT_CHANCE = 0.1
     CROSS_CHANCE = 60
     TIME= 3600 #time in seconds
     POP_SIZE=100
-    def __init__(self, labirynth, popSize=20, logDest="D:\code\labirynthGA\GALabirynth\\", runTime=timedelta(seconds=TIME)  ):
-        self.labirynth=labirynth
-        self.population= self.generatePopulation(popSize)
-        self.logDest=logDest
-        self.fileName="logText.txt"
+    def __init__(self, labirynth: Labirynth, popSize: int=20, logDest:str="D:\code\labirynthGA\GALabirynth\\", runTime: timedelta=timedelta(seconds=TIME)  ):
+        self.labirynth: Labirynth=labirynth
+        self.population :list[Individual]= self.generatePopulation(popSize)
+        self.logDest: str=logDest
+        self.fileName: str="logText.txt"
         self.bestInd:Individual=None
-        self.bestFit=100
-        self.diversityLevel=0
-        self.lock = threading.Lock()
+        self.bestFit: float=100
+        self.diversityLevel: float=0
+        self.lock: threading.Lock = threading.Lock()
 
-        self.startTime=datetime.now()
-        self.timeForRun=runTime
-    def generatePopulation(self, size):
+        self.startTime: datetime=datetime.now()
+        self.timeForRun: datetime=runTime
+    def generatePopulation(self, size: int):
         pop = []
         for i in range(size):
             pop.append(Individual(self))
@@ -54,37 +54,34 @@ class GA(object):
 
         return fitness
 
-    def removeFromPop(self,ind):
+    def removeFromPop(self,ind: Individual):
         self.population.remove(ind)
 
-    def addToPop(self,ind):
+    def addToPop(self,ind: Individual):
         self.population.append(ind)
     def countDiversity(self)->float:
         #porównanie fitness, wybranie losowych punktów i sprawdzenie, w ilu miejscach sie różnią?
         return 0
-    def setLogDest(self,dest):
+    def setLogDest(self,dest: str):
         self.logDest=dest
-    def log(self, fileName=""):
+    def log(self, fileName: str=""):
         filePath:str=self.logDest+fileName
-        with open(filePath,"w") as file:
-            file.write(self.generateLog())
+        with open(filePath,"a") as file:
+            file.write(self.generateLog()+"\n")
 
     def generateLog(self)->str:
         return ""+str(datetime.now().timestamp())+" popS: "+str(self.POP_SIZE)+" fit: "+str(self.bestFit)+" div: "+str(self.countDiversity())
 
-    def run(self, stopPred):
+    def run(self, stopPred: Callable):
         self.startTime = datetime.now()
         self.fileName="labirynthGenAlg"+ str(self.startTime.timestamp())+".txt"
         self.population=self.generatePopulation(self.POP_SIZE)
         self.findBest()
 
-
-
         while not stopPred():
             self.cross()
             self.mutate()
             self.findBest()
-         #   self.bestInd.printInd()
             self.log(fileName=self.fileName)
 
     def findBest(self):

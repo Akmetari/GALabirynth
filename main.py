@@ -1,14 +1,14 @@
 from datetime import timedelta
-from Labirynth import Labirynth
-import Ind as ind
+from model.Labirynth import Labirynth
+import model.Ind as ind
 from Control import Controler
 from GUI.GUI import GUI
 
-from GA import GA
+from model.GA import GA
 
 
 
-def testLabirynth():
+def testLabirynth()->Labirynth:
     lab=Labirynth()
     lab.printLab()
     return lab

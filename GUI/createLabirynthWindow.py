@@ -3,7 +3,7 @@ import GUI.guiFormats as guiFormats
 from PyQt5.QtWidgets import *
 
 class CreateLabWindow(QWidget):
-    def __init__(self , parent=None):
+    def __init__(self , parent =None):
         super(CreateLabWindow,self).__init__()
         self.initUI()
         self.parent=parent

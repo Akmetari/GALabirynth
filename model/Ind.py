@@ -1,11 +1,11 @@
 import random
-import Labirynth as l
+
+import model.Labirynth as l
 import copy
 
 MUTATION_SIZE=1
 
-
-class Individual(object):  
+class Individual(object):
 
     def generateRandomPath(self):
 
@@ -31,6 +31,7 @@ class Individual(object):
         if self.wasChanged:
             self.fitness=self.evaluator.evaluate(self)
         return self.fitness
+
     def __init__(self, evaluator, generate=True):
         self.labirynth=copy.deepcopy(evaluator.labirynth)
         self.fitness=100

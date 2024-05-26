@@ -1,7 +1,7 @@
 import datetime as dt
 from datetime import datetime
 import threading
-from GA import GA
+from model.GA import GA
 from GUI.GUI import GUI
 from GUI.GUI import ActionType
 from observer import  Observer
@@ -65,26 +65,22 @@ class Controler(Observer):
             if(datetime.now()-self.lastUpdate)>=self.deltaOfUpdates:
                 with self.model.lock:
                     self.lastUpdate = datetime.now()
-                    self.ui.data.formatedLabirynth=str(self.model.bestInd.labirynth)
-                    self.ui.mainWindow.labirynthLabel.setText(self.ui.data.formatedLabirynth)
+                    if (self.model.bestInd != None):
+                        self.ui.data.formatedLabirynth=str(self.model.bestInd.labirynth)
+                        self.ui.mainWindow.labirynthLabel.setText(self.ui.data.formatedLabirynth)
 
 
 
     def startAlgorithm(self):
         self.stop=False
+        self.model=GA(self.model.labirynth)
+        self.setParams()
         self.model.timeForRun = dt.timedelta(minutes=1)
-        self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,))
+        self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,),daemon=True)
         self.algRun.start()
 
-        self.labRefr: threading.Thread=threading.Thread(target=self.printLab, args=())
+        self.labRefr: threading.Thread=threading.Thread(target=self.printLab, args=(), daemon=True)
         self.labRefr.start()
-
-
-
-
-
-
-
 
 
 

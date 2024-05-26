@@ -37,8 +37,8 @@ class LabFromFileWindow(QWidget):
         self.loadFileButton.setStyleSheet(guiFormats.buttonStyle)
 
 
-    def browse(self, path: str = "C:/"):
+    def browse(self):
         self.fileDialog=QFileDialog(self)
-        fName = self.fileDialog.getOpenFileName( self,"Browse", "D:/code", "Text files (*.txt)")
+        fName = self.fileDialog.getOpenFileName( self,"Browse", self.parent.data.getLabDir, "Text files (*.txt)")
         self.lineEdit.setText(fName[0])
         self.parent.data.getLabDir=fName[0]

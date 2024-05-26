@@ -51,7 +51,7 @@ class GUI(Subject):
         self.labDataWindow.show()
     def showParamSet(self):
         self.paramSetWindow.show()
-    def infoPopUp(self, text):
+    def infoPopUp(self, text:str):
         self.popup=PopUp(text)
         self.popup.show()
     def showLabCreate(self):

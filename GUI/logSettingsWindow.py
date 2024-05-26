@@ -20,7 +20,7 @@ class LogSettingsWindow(QWidget):
 
     def browse(self):
         self.fileDialog = QFileDialog(self)
-        fName = self.fileDialog.getOpenFileName(self, "Browse", "D:/code", "Text files (*.txt)")
+        fName = self.fileDialog.getOpenFileName(self, "Browse", self.parent.data.logDir, "Text files (*.txt)")
         self.pathLine.setText(fName[0])
 
     def setButtons(self):
