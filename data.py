@@ -5,10 +5,9 @@ class Data():
     #labirynth display
     getLabDir:str="D:\code\labirynthGA\GALabirynth\labirynths\\"
     rawLabirynth:str=""
-    formatedLabirynth:str=""
 
     #labirynth creation
-    saveDir:str=""
+    saveDir:str="D:\code\labirynthGA\GALabirynth\labirynths\\"
     xSize:int=1
     ySize:int=1
     legend: list[(str,str)]=[("Wall","9"),("Empty","0"),("Start","5"), ("End","8")]

@@ -1,4 +1,7 @@
 import sys
+import model.Labirynth as l
+from PyQt5 import QtGui
+from PyQt5.QtGui import QTextCharFormat
 from PyQt5.QtWidgets import QApplication
 from GUI.helpWindow import HelpWindow
 from GUI.mainWindow import MainWindow
@@ -62,10 +65,6 @@ class GUI(Subject):
     def showGetLabWindow(self):
         self.getLabWindow.show()
 
-    def showPopUp(self,text):
-        self.popUp=PopUp(text)
-        self.popUp.show()
-
     def notifyRun(self):
         self.notify(ActionType.run)
 
@@ -108,9 +107,18 @@ class GUI(Subject):
         self.mainWindow.setLogDestinationMenu.triggered.connect(self.showLogSettings)
         self.mainWindow.helpMenu.triggered.connect(self.showHelp)
 
+    def enable(self):
+        self.mainWindow.menuAlgorithm.setEnabled(True)
+        self.mainWindow.selectFromFileMenu.setEnabled(True)
+        self.mainWindow.createNewMenu.setEnabled(True)
+        self.mainWindow.startButton.setEnabled(True)
+    def disable(self):
+        self.mainWindow.menuAlgorithm.setEnabled(False)
+        self.mainWindow.selectFromFileMenu.setEnabled(False)
+        self.mainWindow.createNewMenu.setEnabled(False)
+        self.mainWindow.startButton.setEnabled(False)
 
     def refresh(self):
-        #self.mainWindow.labirynthLabel.setText(self.data.formatedLabirynth)
         self.mainWindow.param1Value.setText(str(self.data.algParams[0]))
         self.mainWindow.param2Value.setText(str(self.data.algParams[1]))
         self.mainWindow.param3Value.setText(str(self.data.algParams[2]))

@@ -26,10 +26,12 @@ class LabDataWindow(QWidget):
         self.lineEdit = QLineEdit(self)
         self.lineEdit.setGeometry(QRect(20, 91, 221, 31))
 
-    def browse(self, path: str = "C:/"):
+    def browse(self):
         self.fileDialog = QFileDialog(self)
-        fName = self.fileDialog.getOpenFileName(self, "Browse", "D:/code", "Text files (*.txt)")
+        fName = self.fileDialog.getOpenFileName(self, "Browse", self.parent.data.saveDir, "Text files (*.txt)")
         self.lineEdit.setText(fName[0])
+        if fName[0]!="":
+            self.parent.data.saveDir=fName[0]
     def setBrowseButton(self):
         self.pushButton = QPushButton(self)
         self.pushButton.setText("Browse")

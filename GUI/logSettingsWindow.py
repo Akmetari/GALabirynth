@@ -22,6 +22,8 @@ class LogSettingsWindow(QWidget):
         self.fileDialog = QFileDialog(self)
         fName = self.fileDialog.getOpenFileName(self, "Browse", self.parent.data.logDir, "Text files (*.txt)")
         self.pathLine.setText(fName[0])
+        if fName[0]!="":
+            self.parent.data.logDir=fName[0]
 
     def setButtons(self):
         self.setButton = QPushButton(self)

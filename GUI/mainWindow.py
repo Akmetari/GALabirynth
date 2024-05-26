@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         self.labirynthLabel = QLabel(self.labirynthFrame)
         self.labirynthLabel.setGeometry(QRect(20, 20, 371, 281))
         self.labirynthLabel.setAlignment(Qt.AlignCenter)
+        self.labirynthLabel.setStyleSheet(guiFormats.midLabelStyle)
 
 
 

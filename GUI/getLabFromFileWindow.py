@@ -41,4 +41,5 @@ class LabFromFileWindow(QWidget):
         self.fileDialog=QFileDialog(self)
         fName = self.fileDialog.getOpenFileName( self,"Browse", self.parent.data.getLabDir, "Text files (*.txt)")
         self.lineEdit.setText(fName[0])
-        self.parent.data.getLabDir=fName[0]
+        if fName[0]!="":
+            self.parent.data.getLabDir=fName[0]

@@ -2,10 +2,13 @@ import copy
 import datetime as dt
 from datetime import datetime
 import threading
+
+from PyQt5 import QtGui
+
 from model.GA import GA
 from GUI.GUI import GUI
+import model.Labirynth
 from GUI.GUI import ActionType
-from model.Labirynth import Labirynth
 from observer import  Observer
 
 class Controler(Observer):
@@ -15,7 +18,7 @@ class Controler(Observer):
         self.model: (GA|None)=None
         self.ui: GUI =newGUI
         self.ui.attach(self)
-        self.stop: bool=False
+        self.stop: bool=True
 
     def run(self):
         if self.ui==None or self.model==None:
@@ -27,9 +30,10 @@ class Controler(Observer):
         self.model=newModel
 
     def setDefaultData(self):
-        self.ui.data.algParams=[self.model.CROSS_CHANCE,self.model.MUT_CHANCE,self.model.popSize]
+        self.ui.data.algParams=[self.model.CROSS_CHANCE,self.model.MUT_CHANCE,self.model.POP_SIZE]
     def setLogSettings(self):
         print("set log params")
+        self.model.logDest=self.ui.data.logDir
 
     def setParams(self):
         print("set alg params")
@@ -46,15 +50,17 @@ class Controler(Observer):
         if self.ui.data.checkLab():
             self.model.labirynth.saveNewMatrix(self.ui.data.saveDir,self.ui.data.userLabirynth)
         else:
-            self.ui.showPopUp("Wrong labirynth format. Check size and used symbols.")
+            self.ui.infoPopUp("Wrong labirynth format. Check size and used symbols.")
         print("create lab")
 
     def selectLabFromFile(self):
-        print("selectLabFromFile")
-        self.model.labirynth.loadMatrixFromFile(self.ui.data.getLabDir)
-        self.ui.data.rawLabirynth=self.model.labirynth.__str__()
-        self.ui.mainWindow.labirynthLabel.setText(self.ui.data.rawLabirynth)
-
+        if self.stop:
+            print("selectLabFromFile")
+            self.model.labirynth.loadMatrixFromFile(self.ui.data.getLabDir)
+            self.ui.data.rawLabirynth=self.model.labirynth.__str__()
+            self.ui.mainWindow.labirynthLabel.setText(self.ui.data.rawLabirynth)
+        else:
+            self.ui.infoPopUp("You cant change labirynth while algorithm is running")
 
     def stopAlg(self)->bool:
         return self.model.stopAfterTime() or self.stop
@@ -76,7 +82,7 @@ class Controler(Observer):
     def startAlgorithm(self):
         self.stop=False
         lab=copy.deepcopy(self.model.labirynth)
-        self.model=GA(lab)
+        self.model=GA(lab,logDest=self.ui.data.logDir)
         self.setParams()
         self.model.timeForRun = dt.timedelta(minutes=1)
         self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,),daemon=True)
@@ -95,7 +101,10 @@ class Controler(Observer):
             case ActionType.setLog:
                 self.setLogSettings()
             case ActionType.run:
-                self.startAlgorithm()
+                if self.stop:
+                    self.startAlgorithm()
+                else:
+                    self.ui.infoPopUp("The algorithm is already running.")
             case ActionType.setParam:
                 self.setParams()
             case ActionType.stop:
