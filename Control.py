@@ -31,7 +31,6 @@ class Controler(Observer):
     def setLogSettings(self):
         print("set log params")
 
-
     def setParams(self):
         print("set alg params")
         self.ui.data.algParams = [x.value() for x in self.ui.paramSetWindow.paramValues]
@@ -54,7 +53,7 @@ class Controler(Observer):
         print("selectLabFromFile")
         self.model.labirynth.loadMatrixFromFile(self.ui.data.getLabDir)
         self.ui.data.rawLabirynth=self.model.labirynth.__str__()
-        self.ui.refresh()
+        self.ui.mainWindow.labirynthLabel.setText(self.ui.data.rawLabirynth)
 
 
     def stopAlg(self)->bool:
