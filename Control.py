@@ -1,9 +1,11 @@
+import copy
 import datetime as dt
 from datetime import datetime
 import threading
 from model.GA import GA
 from GUI.GUI import GUI
 from GUI.GUI import ActionType
+from model.Labirynth import Labirynth
 from observer import  Observer
 
 class Controler(Observer):
@@ -36,6 +38,7 @@ class Controler(Observer):
         self.model.CROSS_CHANCE = self.ui.data.algParams[0]
         self.model.MUT_CHANCE = self.ui.data.algParams[1]
         self.model.POP_SIZE = int(self.ui.data.algParams[2])
+        self.model.generatePopulation(self.model.POP_SIZE)
         self.model.TIME = int(self.ui.data.algParams[3])
 
         self.ui.refresh()
@@ -66,14 +69,15 @@ class Controler(Observer):
                 with self.model.lock:
                     self.lastUpdate = datetime.now()
                     if (self.model.bestInd != None):
-                        self.ui.data.formatedLabirynth=str(self.model.bestInd.labirynth)
-                        self.ui.mainWindow.labirynthLabel.setText(self.ui.data.formatedLabirynth)
+                        self.ui.data.rawLabirynth=str(self.model.bestInd.labirynth)
+                        self.ui.mainWindow.labirynthLabel.setText(self.ui.data.rawLabirynth)
 
 
 
     def startAlgorithm(self):
         self.stop=False
-        self.model=GA(self.model.labirynth)
+        lab=copy.deepcopy(self.model.labirynth)
+        self.model=GA(lab)
         self.setParams()
         self.model.timeForRun = dt.timedelta(minutes=1)
         self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,),daemon=True)

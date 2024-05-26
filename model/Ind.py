@@ -38,7 +38,7 @@ class Individual(object):
         self.wasChanged=True
         self.evaluator=evaluator
 
-        self.pathLen=random.randint(4, self.labirynth.xSize)
+        self.pathLen=random.randint(1, self.labirynth.xSize)
 
         if generate:
             self.generateRandomPath()
