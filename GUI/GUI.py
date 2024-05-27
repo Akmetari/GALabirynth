@@ -1,7 +1,11 @@
+"""
+Main view class. GUI includes all windows of gui with function managing them (eg. show) and data object that stores paarameters
+that are being exchanged between view and controler.
+It implements subject in observer pattern to notify Controler about users actions.
+
+ActionType is an enumeration class that defines signals used to inform controller (throught observer pattern) about actions chosen by user.
+"""
 import sys
-import model.Labirynth as l
-from PyQt5 import QtGui
-from PyQt5.QtGui import QTextCharFormat
 from PyQt5.QtWidgets import QApplication
 from GUI.helpWindow import HelpWindow
 from GUI.mainWindow import MainWindow

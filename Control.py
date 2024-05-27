@@ -1,13 +1,15 @@
+"""
+Controler class manages model and gui, controls data and app flow by running both gui and model methods.
+It implements observer pattern whitch it uses to monitor user-view interactions.
+"""
+
+
 import copy
 import datetime as dt
 from datetime import datetime
 import threading
-
-from PyQt5 import QtGui
-
 from model.GA import GA
 from GUI.GUI import GUI
-import model.Labirynth
 from GUI.GUI import ActionType
 from observer import  Observer
 

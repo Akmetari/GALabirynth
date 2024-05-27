@@ -1,4 +1,10 @@
-import os.path
+"""
+Main model class, instance of genetic algorithm optimizator. Runs main optimization loop and contains both population
+and plain labirynth classes. Evaluates Individual instances and manages logging generations.
+
+Uses basic stop function based on working time.
+"""
+
 import threading
 from datetime import datetime
 from datetime import timedelta
@@ -17,13 +23,13 @@ class GA(object):
         self.population :list[Individual]= self.generatePopulation(popSize)
         self.logDest: str=logDest
         self.fileName: str="logText.txt"
-        self.bestInd:Individual=None
+        self.bestInd:(Individual|None)=None
         self.bestFit: float=100
         self.diversityLevel: float=0
         self.lock: threading.Lock = threading.Lock()
 
         self.startTime: datetime=datetime.now()
-        self.timeForRun: datetime=runTime
+        self.timeForRun: timedelta=runTime
     def generatePopulation(self, size: int):
         pop = []
         for i in range(size):

@@ -1,3 +1,9 @@
+"""
+Labirynth class contains matrix representing labirynth grid. It contains methods checking Individual by its path
+and methods to save and load labirynth from file.
+"""
+
+
 import json
 
 WALL=9

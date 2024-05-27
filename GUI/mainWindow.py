@@ -85,22 +85,22 @@ class MainWindow(QMainWindow):
     def setParamLabelsAndValues(self):
         self.param1Label = QLabel(self.dataFrame)
         self.param1Label.setText("Cross chance: ")
-        self.param1Label.setGeometry(QRect(20, 40, 120, 25))
+        self.param1Label.setGeometry(QRect(20, 40, 140, 25))
         self.param1Label.setStyleSheet(guiFormats.smolLabelStyle)
 
         self.param2Label = QLabel(self.dataFrame)
         self.param2Label.setText("Mute chance: ")
-        self.param2Label.setGeometry(QRect(20, 99, 120, 25))
+        self.param2Label.setGeometry(QRect(20, 99, 140, 25))
         self.param2Label.setStyleSheet(guiFormats.smolLabelStyle)
 
         self.param3Label = QLabel(self.dataFrame)
         self.param3Label.setText("Pop size: ")
-        self.param3Label.setGeometry(QRect(20, 159, 120, 25))
+        self.param3Label.setGeometry(QRect(20, 159, 140, 25))
         self.param3Label.setStyleSheet(guiFormats.smolLabelStyle)
 
         self.param4Label = QLabel(self.dataFrame)
         self.param4Label.setText("Time (seconds): ")
-        self.param4Label.setGeometry(QRect(20, 219, 120, 25))
+        self.param4Label.setGeometry(QRect(20, 219, 140, 25))
         self.param4Label.setStyleSheet(guiFormats.smolLabelStyle)
 
 
@@ -114,9 +114,9 @@ class MainWindow(QMainWindow):
 
         self.param3Value = QLabel(self.dataFrame)
         self.param3Value.setGeometry(QRect(190, 160, 121, 16))
-        self.param3Value.setText(str(self.myParent.data.algParams[2]))
+        self.param3Value.setText(str(round(self.myParent.data.algParams[2])))
 
         self.param4Value = QLabel(self.dataFrame)
         self.param4Value.setGeometry(QRect(190, 220, 121, 16))
-        self.param4Value.setText(str(self.myParent.data.algParams[3]))
+        self.param4Value.setText(str(round(self.myParent.data.algParams[3])))
 

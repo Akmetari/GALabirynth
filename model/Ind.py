@@ -1,9 +1,13 @@
-import random
+"""
+Individual class represents single individual in genetic algorithms population. It contains labirynth with filled path of possible solution.
+Path is represented by 4 directions that indicate in whitch way next step of path is being made.
+"""
 
+import random
 import model.Labirynth as l
 import copy
 
-MUTATION_SIZE=1
+MUTATION_SIZE=1 #number of mutations in one individual
 
 class Individual(object):
 

@@ -1,3 +1,6 @@
+"Data class is used to pass data form view to controler and the other way without messing with observer pattern. "
+
+
 from model.GA import GA as ga
 
 class Data():
