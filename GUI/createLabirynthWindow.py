@@ -11,7 +11,7 @@ class CreateLabWindow(QWidget):
 
 
     def initUI(self):
-        self.resize(534, 497)
+        self.setFixedSize(534, 497)
         self.setLegend()
         self.setCreateButton()
         self.setTitleLabel()

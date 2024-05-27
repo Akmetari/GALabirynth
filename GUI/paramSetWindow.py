@@ -11,7 +11,7 @@ class ParamSetWindow(QWidget):
 
 
     def initUI(self, params: dict):
-        self.resize(270, 340)
+        self.setFixedSize(270, 340)
 
         self.setTitleLabel()
         self.setParamsLabels(list(params.keys()))

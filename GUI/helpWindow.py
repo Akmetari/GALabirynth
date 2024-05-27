@@ -17,7 +17,7 @@ class HelpWindow(QWidget):
         self.parent=parent
 
     def initUI(self):
-        self.resize(454, 419)
+        self.setFixedSize(454, 419)
         self.setLabel()
         self.setOkButton()
         self.setHelpFrame()

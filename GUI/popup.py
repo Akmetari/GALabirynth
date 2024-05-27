@@ -10,7 +10,7 @@ class PopUp(QWidget):
         self.setupUi(text)
         self.parent=parent
     def setupUi(self, text:str):
-        self.resize(400, 137)
+        self.setFixedSize(400, 137)
         self.okButton = QPushButton(self)
         self.okButton.setText("Ok")
         self.okButton.setGeometry(QRect(30, 90, 211, 31))

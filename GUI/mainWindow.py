@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
 
 
     def initUI(self):
-        self.resize(875, 485)
+        self.setFixedSize(875, 485)
 
         self.setMenu()
         self.setButtons()

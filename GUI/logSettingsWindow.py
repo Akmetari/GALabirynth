@@ -10,7 +10,7 @@ class LogSettingsWindow(QWidget):
         self.initUI()
         self.parent=parent
     def initUI(self):
-        self.resize(400, 200)
+        self.setFixedSize(400, 200)
 
         self.pathLine = QLineEdit(self)
         self.pathLine.setGeometry(QRect(10, 100, 251, 31))

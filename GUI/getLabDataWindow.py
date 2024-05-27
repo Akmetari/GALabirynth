@@ -12,7 +12,7 @@ class LabDataWindow(QWidget):
 
     def initUI(self):
 
-        self.resize(400, 300)
+        self.setFixedSize(400, 300)
         self.setTitleLabel()
         self.setFileChoice()
         self.setSizeChoice()

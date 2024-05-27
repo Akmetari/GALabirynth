@@ -10,7 +10,7 @@ class LabFromFileWindow(QWidget):
         self.parent=parent
     def initUi(self):
 
-        self.resize(400, 173)
+        self.setFixedSize(400, 173)
         self.lineEdit = QLineEdit(self)
         self.lineEdit.setGeometry(QRect(10, 80, 251, 31))
 
