@@ -44,6 +44,17 @@ class GA(object):
                     partner= random.choice(self.population)
 
                 ind.cross(partner)
+
+    def tournamentCross(self):
+        sortedPop: list[Individual]= sorted(self.population)
+
+        for i in range(0,int(self.POP_SIZE/2)):
+            sortedPop[i].cross(sortedPop[self.POP_SIZE +2 - i])
+            if i>3:
+                sortedPop[i].evaluator.removeFromPop()
+                sortedPop[self.POP_SIZE +2 - i].evaluator.removeFromPop()
+            sortedPop[self.POP_SIZE-1-i].evaluator.removeFromPop()
+
     def mutate(self):
         for ind in self.population:
             if(random.uniform(0.0,100.0))<self.MUT_CHANCE:
@@ -85,7 +96,7 @@ class GA(object):
         self.findBest()
 
         while not stopPred():
-            self.cross()
+            self.tournamentCross()
             self.mutate()
             self.findBest()
             self.log(fileName=self.fileName)

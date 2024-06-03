@@ -92,6 +92,12 @@ class Individual(object):
         self.labirynth.printLab()
         print("")
 
+    def __lt__(self, other):
+        return self.fitness < other.fitness
+
+    def __gt__(self, other):
+        return self.fitness < other.fitness
+
 
 
 
