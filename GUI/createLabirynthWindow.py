@@ -18,7 +18,7 @@ class CreateLabWindow(QWidget):
 
         self.labirynthCreateInput = QPlainTextEdit(self)
         self.labirynthCreateInput.setGeometry(QRect(20, 90, 391, 311))
-
+        self.labirynthCreateInput.setStyleSheet(guiFormats.midLabelStyle)
 
 
     def setLegend(self, symbols: list[(str,str)] = [("Wall","9"),("Empty","0"), ("Right","1"),("Left","3"), ("Up","2"), ("Down","4")]): # tuples of name and symbol representing different parts of labirynth

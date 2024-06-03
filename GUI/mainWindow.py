@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
 
 
         self.param1Value = QLabel(self.dataFrame)
-        self.param1Value.setGeometry(QRect(200, 40, 101, 20))
+        self.param1Value.setGeometry(QRect(190, 40, 101, 20))
         self.param1Value.setText(str(self.myParent.data.algParams[0]))
 
         self.param2Value = QLabel(self.dataFrame)
