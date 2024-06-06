@@ -150,16 +150,21 @@ class Labirynth(object):
     def isStartAndEnd(self,individual)->bool:
         return individual.labirynth.matrix[self.startPoint[1]][self.startPoint[0]] != EMPTY and individual.labirynth.matrix[self.endPoint[1]][self.endPoint[0]] != EMPTY
 
-    def makeStep(self, position:(int,int))->(int,int): #returns position after step coded on given labirynth crate
+    def makeStep(self, position:(int,int))->(int,int): #returns position after step coded on given labirynth crate x,y
         direction=self.matrix[position[1]][position[0]]
-
+        pos:tuple=position
         if direction == RIGHT:
-            return (position[0]+1,position[1])
+            pos= (position[0]+1,position[1])
         elif direction == UP:
-            return (position[0], position[1]-1)
+            pos= (position[0], position[1]-1)
         elif direction == LEFT:
-            return (position[0]-1,position[1])
+            pos= (position[0]-1,position[1])
         elif direction == DOWN:
-            return (position[0], position[1]+1)
+            pos= (position[0], position[1]+1)
         else:
-            return position
+            pos= position
+
+        if pos[1]>self.xSize or pos[0]>self.ySize or pos[0]<0 or pos[1]<0:
+            pos=self.startPoint
+
+        return pos #x,y

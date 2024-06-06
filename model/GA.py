@@ -14,12 +14,13 @@ from model.Ind import Individual
 from model.Labirynth import Labirynth
 import random
 class GA(object):
-    MUT_CHANCE = 0.1
+    MUT_CHANCE = 60
     CROSS_CHANCE = 60
     TIME= 3600 #time in seconds
     POP_SIZE=100
-    def __init__(self, labirynth: Labirynth, popSize: int=20, logDest:str="D:\code\labirynthGA\GALabirynth\\", runTime: timedelta=timedelta(seconds=TIME)  ):
+    def __init__(self, labirynth: Labirynth, popSize: int=POP_SIZE, logDest:str="D:\code\labirynthGA\GALabirynth\\", runTime: timedelta=timedelta(seconds=TIME)  ):
         self.labirynth: Labirynth=labirynth
+        self.POP_SIZE=popSize
         self.population :list[Individual]= self.generatePopulation(popSize)
         self.logDest: str=logDest
         self.fileName: str="logText.txt"
@@ -49,17 +50,19 @@ class GA(object):
         sortedPop: list[Individual]= sorted(self.population)
 
         for i in range(0,int(self.POP_SIZE/2)):
-            sortedPop[i].cross(sortedPop[self.POP_SIZE +2 - i])
-            if i>3:
-                sortedPop[i].evaluator.removeFromPop()
-                sortedPop[self.POP_SIZE +2 - i].evaluator.removeFromPop()
-            sortedPop[self.POP_SIZE-1-i].evaluator.removeFromPop()
+            sortedPop[i].cross(sortedPop[self.POP_SIZE -1 - i])
+            if i<3:
+                self.removeFromPop(sortedPop[self.POP_SIZE - 1 - i])
+                self.removeFromPop(sortedPop[self.POP_SIZE - 1])  # deleting worst to maintain same pop size
+            else:
+                self.removeFromPop(sortedPop[i])
+                self.removeFromPop(sortedPop[self.POP_SIZE - 1 - i])
 
     def mutate(self):
         for ind in self.population:
             if(random.uniform(0.0,100.0))<self.MUT_CHANCE:
-                ind.mutate()
-
+                #ind.patchworkMutate()
+                ind.patchworkMutate()
     def evaluate(self,ind : Individual)->float: # calculates fitness of individual, we will minimize the function
         pathCheck= ind.labirynth.pathCheck(ind)
         pathWalked= pathCheck[1] if pathCheck[1]>0 else 1
@@ -72,7 +75,8 @@ class GA(object):
         return fitness
 
     def removeFromPop(self,ind: Individual):
-        self.population.remove(ind)
+        if ind in self.population:
+            self.population.remove(ind)
 
     def addToPop(self,ind: Individual):
         self.population.append(ind)
@@ -94,12 +98,17 @@ class GA(object):
         self.fileName="labirynthGenAlg"+ str(self.startTime.timestamp())+".txt"
         self.population=self.generatePopulation(self.POP_SIZE)
         self.findBest()
-
+        self.printGA()
+        i=0
         while not stopPred():
             self.tournamentCross()
             self.mutate()
             self.findBest()
+            print(str(i)+ " hole: " + str(self.bestInd.firstHole))
+            if i%10==0:
+                self.bestInd.printInd()
             self.log(fileName=self.fileName)
+            i+=1
 
     def findBest(self):
         bestFit=self.population[0].getFitness()
@@ -111,9 +120,9 @@ class GA(object):
                 bestFit= newFit
                 bestInd=ind
 
-        with self.lock:
-            self.bestInd=bestInd
-            self.bestFit=bestFit
+        #with self.lock:
+        self.bestInd=bestInd
+        self.bestFit=bestFit
 
     def printGA(self):
         print("Labirynth: ")
