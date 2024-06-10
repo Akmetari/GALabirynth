@@ -45,7 +45,7 @@ class Controler(Observer):
         self.model.POP_SIZE = round(self.ui.data.algParams[2])
         self.model.generatePopulation(self.model.POP_SIZE)
         self.model.TIME = round(self.ui.data.algParams[3])
-
+        self.model.timeForRun=dt.timedelta(seconds=self.model.TIME)
         self.ui.refresh()
 
     def createLab(self):
@@ -65,7 +65,9 @@ class Controler(Observer):
             self.ui.infoPopUp("You cant change labirynth while algorithm is running")
 
     def stopAlg(self)->bool:
-        return self.model.stopAfterTime() or self.stop
+        if self.model.stopAfterTime():
+            self.stop=True
+        return self.stop
 
     def printLab(self):
         self.deltaOfUpdates: dt.timedelta = dt.timedelta(seconds=2)
@@ -86,7 +88,6 @@ class Controler(Observer):
         lab=copy.deepcopy(self.model.labirynth)
         self.model=GA(lab,logDest=self.ui.data.logDir)
         self.setParams()
-        self.model.timeForRun = dt.timedelta(minutes=1)
         self.algRun: threading.Thread=threading.Thread(target=self.model.run,args=(self.stopAlg,),daemon=True)
         self.algRun.start()
 

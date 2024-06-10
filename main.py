@@ -46,8 +46,27 @@ def testMatrixLoad():
     print("y: "+str(lab.ySize))
 
 if __name__ == '__main__':
-    ctr=Controler(GUI())
-    ctr.setModel(GA(Labirynth()))
+    #ctr=Controler(GUI())
+    #ctr.setModel(GA(Labirynth()))
 
-    ctr.run()
+    #ctr.run()
+
+    ga=GA(Labirynth(),popSize=1000)
+    ga.logDest="D:\code\labirynthGA\GALabirynth\logs\mutation"
+    ga.timeForRun=timedelta(seconds=600)
+
+
+    ga.logDest = "D:\code\labirynthGA\GALabirynth\logs\popS"
+
+
+    ga.POP_SIZE = 1000
+    ga.run(ga.stopAfterIterations)
+
+    ga.POP_SIZE = 100
+    ga.run(ga.stopAfterIterations)
+
+
+
+
+
 

@@ -24,8 +24,8 @@ class Individual(object):
 
     def generateRandomPath(self):
 
-        lastStep =self.startPoint#x,y
-        #lastStep=self.evaluator.labirynth.startPoint
+        #lastStep =self.startPoint#x,y
+        lastStep=self.evaluator.labirynth.startPoint
         for i in range(self.pathLen):
             directionsToCheck=[1,2,3,4]
 
@@ -89,11 +89,14 @@ class Individual(object):
             self.labirynth.matrix[self.startPoint[1]][self.startPoint[0]]=1
             self.firstHole=self.startPoint
             self.pathLen=1
+
     def cross(self,partner):
+
         xStart=random.randint(0,self.labirynth.xSize-2)
         xEnd=random.randint(xStart,self.labirynth.xSize-1)
         yStart=random.randint(0,self.labirynth.ySize-2)
         yEnd=random.randint(yStart+1,self.labirynth.ySize-1)
+
 
         child1=Individual(self.evaluator,generate=False)
         child1.labirynth= copy.deepcopy(self.labirynth)
@@ -111,9 +114,9 @@ class Individual(object):
 
         child1.countLen()
         child1.findHole()
-
         child2.countLen()
         child2.findHole()
+
         self.evaluator.addToPop(child1)
         self.evaluator.addToPop(child2)
 

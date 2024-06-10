@@ -48,7 +48,7 @@ class Labirynth(object):
                 row.append(EMPTY)
             self.matrix.append(row)
         self.fillLabirynth(walls)
-
+        self.crossroads=self.findCrossroads()
 
     def __str__(self):
         s=""
@@ -129,9 +129,32 @@ class Labirynth(object):
 
         self.xSize=len(self.matrix[0])
         self.ySize=len(self.matrix)
+        self.crossroads=self.findCrossroads()
 
 
 
+    def findCrossroads(self)-> list[(int,int)]:
+        crossroads :list[(int,int)]=[]
+        def is_path(r, c):
+            return 0 <= r < self.ySize and 0 <= c < self.xSize and self.matrix[r][c] == 0
+
+        for r in range(self.ySize):
+            for c in range(self.xSize):
+                if self.matrix[r][c] == 0:
+                    count_paths = 0
+                    if is_path(r - 1, c):  # góra
+                        count_paths += 1
+                    if is_path(r + 1, c):  # dół
+                        count_paths += 1
+                    if is_path(r, c - 1):  # lewo
+                        count_paths += 1
+                    if is_path(r, c + 1):  # prawo
+                        count_paths += 1
+
+                    if count_paths >= 3:
+                        crossroads.append((r, c))
+
+        return crossroads
 
     def pathCheck(self, individual)-> (bool,int): #checks if path is continuous and doesn't hit any wall, returns info if bad step and length of path walked before it
         position=self.startPoint
@@ -168,3 +191,21 @@ class Labirynth(object):
             pos=self.startPoint
 
         return pos #x,y
+
+    def checkIfBranch(self,point)->(bool,list[(int,int)]):
+        y=point[0]
+        x=point[1]
+
+        paths: list[(int,int)]=[]
+
+        if self.matrix[y][x] == 0:
+            if y-1>=0 and self.matrix[y - 1][x]==UP:  # góra
+                paths.append((y - 1,x))
+            if y+1<self.ySize and self.matrix[y + 1][x]==DOWN:  # dół
+                paths.append((y + 1,x))
+            if x-1>=0 and self.matrix[y][x - 1]==LEFT:  # lewo
+                paths.append((y,x-1))
+            if x+1< self.xSize and self.matrix[y][x + 1]==RIGHT:  # prawo
+                paths.append((y,x+1))
+
+        return (len(paths) > 2, paths)
